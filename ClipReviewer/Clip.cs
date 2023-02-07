@@ -30,8 +30,18 @@ namespace ClipReviewer
 
             if (!File.Exists(thumbnailPath))
             {
-                IConversion conversion = await FFmpeg.Conversions.FromSnippet.Snapshot(fullFilePath, thumbnailPath, TimeSpan.FromSeconds(19));
-                IConversionResult result = await conversion.Start();
+                try
+                {
+                    IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(fullFilePath);
+                    var videoDuration = mediaInfo.VideoStreams.First().Duration;
+                    Console.WriteLine(videoDuration);
+                    IConversion conversion = await FFmpeg.Conversions.FromSnippet.Snapshot(fullFilePath, thumbnailPath, TimeSpan.FromSeconds(19));
+                    IConversionResult result = await conversion.Start();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             return new Clip(id, fullFilePath, category, description, thumbnailPath);
         }
@@ -71,6 +81,11 @@ namespace ClipReviewer
                 }
             }
             return hash.ToString("X8");
+        }
+
+        public override string ToString()
+        {
+            return $"{ID}. {FileName} ({FullFilePath})";
         }
     }
 }

@@ -52,12 +52,12 @@
             this.txtBoxClipsFolderLocation.Name = "txtBoxClipsFolderLocation";
             this.txtBoxClipsFolderLocation.Size = new System.Drawing.Size(591, 23);
             this.txtBoxClipsFolderLocation.TabIndex = 0;
-            this.txtBoxClipsFolderLocation.TextChanged += new System.EventHandler(this.RefreshUI);
+            this.txtBoxClipsFolderLocation.TextChanged += new System.EventHandler(this.txtBoxClipsFolderLocation_TextChanged);
             // 
             // btnClipsFolderBrowse
             // 
             this.btnClipsFolderBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClipsFolderBrowse.Location = new System.Drawing.Point(687, 4);
+            this.btnClipsFolderBrowse.Location = new System.Drawing.Point(687, 5);
             this.btnClipsFolderBrowse.Name = "btnClipsFolderBrowse";
             this.btnClipsFolderBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnClipsFolderBrowse.TabIndex = 1;
@@ -68,7 +68,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(12, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 15);
             this.label1.TabIndex = 3;
@@ -107,12 +107,12 @@
             this.btnStartReview.UseVisualStyleBackColor = true;
             this.btnStartReview.Click += new System.EventHandler(this.btnStartReview_Click);
             // 
-            // pCategories
+            // pBoxLeft
             // 
             this.pBoxLeft.Controls.Add(this.compClipsCategories1);
             this.pBoxLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.pBoxLeft.Location = new System.Drawing.Point(0, 33);
-            this.pBoxLeft.Name = "pCategories";
+            this.pBoxLeft.Name = "pBoxLeft";
             this.pBoxLeft.Size = new System.Drawing.Size(427, 436);
             this.pBoxLeft.TabIndex = 9;
             // 
@@ -124,12 +124,12 @@
             this.compClipsCategories1.Size = new System.Drawing.Size(427, 436);
             this.compClipsCategories1.TabIndex = 0;
             // 
-            // pClipData
+            // pBoxRight
             // 
             this.pBoxRight.Controls.Add(this.compClipsData1);
             this.pBoxRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.pBoxRight.Location = new System.Drawing.Point(427, 33);
-            this.pBoxRight.Name = "pClipData";
+            this.pBoxRight.Name = "pBoxRight";
             this.pBoxRight.Size = new System.Drawing.Size(428, 436);
             this.pBoxRight.TabIndex = 10;
             // 
@@ -138,8 +138,8 @@
             this.compClipsData1.Clips = null;
             this.compClipsData1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compClipsData1.Location = new System.Drawing.Point(0, 0);
-            this.compClipsData1.Name = "compClipsData1";
             this.compClipsData1.LockedSelection = -1;
+            this.compClipsData1.Name = "compClipsData1";
             this.compClipsData1.Size = new System.Drawing.Size(428, 436);
             this.compClipsData1.TabIndex = 0;
             // 
@@ -156,8 +156,8 @@
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(855, 531);
             this.Controls.Add(this.btnClipDataLoad);
             this.Controls.Add(this.pBoxRight);

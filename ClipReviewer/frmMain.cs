@@ -15,17 +15,31 @@ namespace ClipReviewer
 {
     public partial class frmMain : Form
     {
+        private bool isClipFolderValid =>
+            IsPathValid(txtBoxClipsFolderLocation.Text) && Directory.Exists(txtBoxClipsFolderLocation.Text);
+
         public frmMain()
         {
             InitializeComponent();
             RefreshUI();
-            FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
+            frmMain_Resize(null, null);
+            DownloadFFmpeg();
+        }
+
+        private void DownloadFFmpeg()
+        {
+            string ffmpegDir = Path.Combine(AppContext.BaseDirectory, "FFmpeg");
+            if (!Directory.Exists(ffmpegDir))
+                Directory.CreateDirectory(ffmpegDir);
+            if (!File.Exists(Path.Combine(ffmpegDir,"ffmpeg.exe")))
+                FFmpegDownloader.GetLatestVersion(FFmpegVersion.Full, ffmpegDir, null);
+            FFmpeg.SetExecutablesPath(ffmpegDir);
         }
 
         private void RefreshUI(object sender = default, EventArgs e = default)
         {
             // clips folder location
-            bool isValid = IsPathValid(txtBoxClipsFolderLocation.Text) && Directory.Exists(txtBoxClipsFolderLocation.Text);
+            var isValid = isClipFolderValid;
             txtBoxClipsFolderLocation.BackColor =
                 isValid || string.IsNullOrEmpty(txtBoxClipsFolderLocation.Text)
                 ? Color.White : Color.MistyRose;
@@ -41,6 +55,16 @@ namespace ClipReviewer
         private void frmMain_Click(object sender, EventArgs e)
         {
             compClipsCategories1.Unselect();
+        }
+
+        private void txtBoxClipsFolderLocation_TextChanged(object sender, EventArgs e)
+        {
+            RefreshUI();
+            if (isClipFolderValid)
+            {
+                int clipsCount = compClipsData1.GetClipFiles(txtBoxClipsFolderLocation.Text).Count();
+                btnClipDataLoad.Text = $"Load ({clipsCount})";
+            }
         }
 
         private void btnClipsFolderBrowse_Click(object sender, EventArgs e)
@@ -66,5 +90,6 @@ namespace ClipReviewer
             compClipsData1.LockedSelection++;
             Console.WriteLine(compClipsData1.LockedSelection);
         }
+
     }
 }
