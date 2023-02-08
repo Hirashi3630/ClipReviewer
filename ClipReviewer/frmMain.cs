@@ -46,12 +46,6 @@ namespace ClipReviewer
             btnClipDataLoad.Enabled = isValid;
         }
 
-        private void frmMain_Resize(object sender, EventArgs e)
-        {
-            pBoxLeft.Width = Convert.ToInt32(this.Width * .5 - 10);
-            pBoxRight.Width = Convert.ToInt32(this.Width * .5 - 10);
-        }
-
         private void frmMain_Click(object sender, EventArgs e)
         {
             compClipsCategories1.Unselect();
@@ -90,6 +84,5 @@ namespace ClipReviewer
             compClipsData1.LockedSelection++;
             Console.WriteLine(compClipsData1.LockedSelection);
         }
-
     }
 }
