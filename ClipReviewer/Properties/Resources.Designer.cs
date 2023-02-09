@@ -59,5 +59,14 @@ namespace ClipReviewer.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Hirashi3630/ClipReviewer.
+        /// </summary>
+        internal static string GithubURL {
+            get {
+                return ResourceManager.GetString("GithubURL", resourceCulture);
+            }
+        }
     }
 }

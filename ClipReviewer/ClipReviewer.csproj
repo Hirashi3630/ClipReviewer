@@ -3,10 +3,15 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
+    <VersionSuffix>alpha</VersionSuffix>
+    <VersionPrefix>0.0.1</VersionPrefix>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;ARM32</Platforms>
+    <PackageProjectUrl>https://github.com/Hirashi3630/ClipReviewer</PackageProjectUrl>
+    <Copyright></Copyright>
+    <Title>Clip Reviewer</Title>
   </PropertyGroup>
 
   <ItemGroup>
