@@ -20,6 +20,10 @@ namespace ClipReviewer
         {
             InitializeComponent();
             DownloadFFmpeg();
+            this.Text = $"{compAbout.AssemblyTitle} • {compAbout.AssemblyVersion}";
+#if DEBUG
+            this.Text += " DEBUG";
+#endif
         }
 
         private void DownloadFFmpeg()
