@@ -49,18 +49,18 @@ namespace ClipReviewer
         #region Menu - Help
         private void githubWikiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            compAbout.OpenURL(Resources.GithubURL);
+            compAbout.OpenURL(compAbout.GITHUB_URL);
         }
 
         private void reportIssueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            compAbout.OpenURL(Resources.GithubURL, "issues");
+            compAbout.OpenURL(compAbout.GITHUB_URL, "issues");
         }
 
         private void checkUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO: check for updates
-            compAbout.OpenURL(Resources.GithubURL, "releases");
+            compAbout.OpenURL(compAbout.GITHUB_URL, "releases");
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

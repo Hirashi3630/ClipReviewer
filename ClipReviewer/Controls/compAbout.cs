@@ -13,13 +13,15 @@ namespace ClipReviewer.Controls
 {
     partial class compAbout : Form
     {
+        public static readonly string GITHUB_URL = "https://github.com/Hirashi3630/ClipReviewer";
+
         public compAbout()
         {
             InitializeComponent();
             this.Text = string.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = string.Format("Version {0}", AssemblyVersion);
-            this.labelURL.Text = Resources.GithubURL;
+            this.labelURL.Text = GITHUB_URL;
             this.textBoxDescription.Text = AssemblyDescription;
         }
 
