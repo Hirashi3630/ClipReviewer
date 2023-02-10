@@ -19,6 +19,24 @@ namespace ClipReviewer
             tabControler.Appearance = TabAppearance.FlatButtons;
             tabControler.ItemSize = new Size(0, 1);
             tabControler.SizeMode = TabSizeMode.Fixed;
+
+            // change parents from main enable checkboxes for groupboxes
+            gBoxClipReviewAutoSeek.Controls.Remove(cBoxClipReviewAutoSeekEnabled);
+            pClipReviewAutoSeek.Controls.Add(cBoxClipReviewAutoSeekEnabled);
+            cBoxClipReviewAutoSeekEnabled.BringToFront();
+
+            LoadSettings();
+            RefreshUI(null, null);
+        }
+
+        private void LoadSettings()
+        {
+            // TODO: load settings
+        }
+
+        private void RefreshUI(object sender, EventArgs e)
+        {
+            gBoxClipReviewAutoSeek.Enabled = cBoxClipReviewAutoSeekEnabled.Checked;
         }
 
         private void btnDiscardChanges_Click(object sender, EventArgs e)
@@ -40,9 +58,11 @@ namespace ClipReviewer
 
         private void treeViewSearch_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node != null && !string.IsNullOrEmpty(e.Node.Text))
-                tabControler.SelectTab("tab" + e.Node?.Text);
+            if (e.Node != null && !string.IsNullOrEmpty(e.Node.Name))
+                tabControler.SelectTab("tab" + e.Node?.Name);
         }
+
+
 
         #endregion
 
@@ -50,10 +70,8 @@ namespace ClipReviewer
         #region TabGeneral
 
         #endregion
+
         #endregion
 
-        
-
-        
     }
 }
