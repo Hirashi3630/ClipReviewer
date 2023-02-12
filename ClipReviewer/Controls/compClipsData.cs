@@ -1,47 +1,84 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Windows.Forms;
-using ClipReviewer.Utils;
+﻿using ClipReviewer.Utils;
+using CSRakowski.Parallel;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Linq.Dynamic;
+using System.Collections;
 
 namespace ClipReviewer.Controls
 {
     public partial class compClipsData : UserControl
     {
+        private bool m_ReviewInProgress = false;
+        public bool ReviewInProgress
+        {
+            get => m_ReviewInProgress;
+            set
+            {
+                m_ReviewInProgress = value;
+                
+                dataGridView1_SelectionChanged(null, null);
+            }
+        }
+
+        private int m_LockedSelection = -1;
+        public int LockedSelection
+        {
+            get => m_LockedSelection;
+            set
+            {
+                m_LockedSelection = value;
+                // TODO: focus on selected 
+                if (value >= 0 && value < dataGridView1.RowCount && ReviewInProgress)
+                    dataGridView1.Rows[value].Selected = true;
+            }
+        }
+
         public IEnumerable<FileInfo> GetClipFiles(string folderPath) => new DirectoryInfo(folderPath).GetFilesByExtensions(".mp4", ".avi", ".mkv");
         private static bool IsPathValid(string path)
             => new Regex("^(?:[a-zA-Z]:|\\\\\\\\[\\w\\.]+\\\\[\\w.$]+)\\\\(?:[\\w\\s]+\\\\)*[\\w\\s]+$").IsMatch(path);
 
-        public bool isClipFolderValid =>
-            IsPathValid(txtBoxClipsFolderLocation.Text) && Directory.Exists(txtBoxClipsFolderLocation.Text);
-
-
-        private int m_LockedSelection = -1;
-        public int LockedSelection { get => m_LockedSelection; 
-            set
-            {
-                m_LockedSelection = value;
-                if(value >= 0 && value < dataGridView1.RowCount)
-                    dataGridView1.Rows[value].Selected = true;
-            }
-        }
         public List<Clip> Clips { get; set; }
 
         public compClipsData()
         {
             InitializeComponent();
+            RefreshUI(null, null);
         }
 
-        private void RefreshUI()
+        private void RefreshUI(object sender, EventArgs e)
         {
             // clips folder location
-            var isValid = isClipFolderValid;
+            var isValid = IsPathValid(txtBoxClipsFolderLocation.Text) && Directory.Exists(txtBoxClipsFolderLocation.Text);
+            if (isValid)
+            {
+                int clipsCount = GetClipFiles(txtBoxClipsFolderLocation.Text).Count();
+                btnLoad.Text = $"Load ({clipsCount})";
+                isValid = clipsCount > 0;
+            }
             txtBoxClipsFolderLocation.BackColor =
                 isValid || string.IsNullOrEmpty(txtBoxClipsFolderLocation.Text)
                 ? Color.White : Color.MistyRose;
-            btnClipDataLoad.Enabled = isValid;
+            btnLoad.Enabled = isValid;
+
+            btnUnload.Enabled = Clips != null && Clips.Count > 0;
         }
 
-        public async Task<List<Clip>> LoadClips(string folderPath)
+        public void SortDataGridViewByProperty(string property, ref bool ascending)
+        {
+            System.Reflection.PropertyInfo? prop = typeof(Clip).GetProperty(property);
+            if (prop != null)
+            {
+                if (ascending)
+                    dataGridView1.DataSource = Clips.OrderBy(x => prop.GetValue(x, null)).ToList();
+                else
+                    dataGridView1.DataSource = Clips.OrderBy(x => prop.GetValue(x, null)).Reverse().ToList();
+                ascending = !ascending;
+            }
+        }
+
+        public async Task<List<Clip>> LoadClips(string folderPath, bool slowMethod = false)
         {
             Clips = new List<Clip>();
             progressBar1.Value = 0;
@@ -50,38 +87,77 @@ namespace ClipReviewer.Controls
             IEnumerable<FileInfo> fileEntries = GetClipFiles(folderPath);
             progressBar1.Maximum = fileEntries.Count();
 
-            List<Task<Clip>> TaskList = new List<Task<Clip>>();
-            uint i = 0;
-            foreach (var f in fileEntries)
+
+            if (slowMethod)
             {
-                var LastTask = Clip.New(i++, f.FullName);
-                TaskList.Add(LastTask);
-                Clips.Add(LastTask.Result);
-                progressBar1.Increment(1);
+                var clips = await ParallelAsync.ForEachAsync(fileEntries, (f) =>
+                {
+                    return Clip.New(f.FullName);
+                }, maxBatchSize: 0, allowOutOfOrderProcessing: true);
+
+                uint i = 0;
+                foreach (var c in clips)
+                {
+                    c.ID = i++;
+                    Clips.Add(c);
+                }
+            }
+            else
+            {
+                uint i = 0;
+                foreach (var f in fileEntries)
+                {
+                    Clips.Add(await Clip.New(f.FullName, id: i++));
+                    progressBar1.Increment(1);
+                }
             }
 
-            await Task.WhenAll(TaskList.ToArray()).ContinueWith((x) => { Console.WriteLine("Finished"); });
-
-            // set source
-            Console.WriteLine("Finished?");
+            Console.WriteLine("All Clips added!");
             dataGridView1.DataSource = Clips;
+            dataGridView1.AutoResizeColumns();
             return Clips;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (LockedSelection >= 0 && dataGridView1.CurrentCell.RowIndex != LockedSelection)
+            // dataGridView1.CurrentCell?.RowIndex != LockedSelection
+            if (LockedSelection >= 0 && LockedSelection < dataGridView1.RowCount && ReviewInProgress)
                 dataGridView1.Rows[LockedSelection].Selected = true;
         }
 
-        private async void btnClipDataLoad_Click(object sender, EventArgs e)
+        private async void btnLoad_Click(object sender, EventArgs e)
         {
             //// load clips to datagrid
             //dataGridView1.
-            await LoadClips(txtBoxClipsFolderLocation.Text);
+            bool slow = false;
+            DialogResult result = MsgBox.Question(
+                "There is an issue with Antimalware Execution Service slowing down this process.\r\n\r\n" +
+                "(this applies mainly when creating thumbnails)\r\n" +
+                "(Progress bar below data grid works only in slow load!)\r\n\r\n" +
+                "Do you want to proceed with slow load? (low CPU usage)");
+            if (result == DialogResult.Yes)
+            {
+                slow = true;
+            }
+            else if (result == DialogResult.No)
+            {
+                slow = true;
+            }
+            else
+            {
+                return;
+            }
+            await LoadClips(txtBoxClipsFolderLocation.Text, slow);
+            RefreshUI(null, null);
         }
 
-        private void btnClipsFolderBrowse_Click(object sender, EventArgs e)
+        private void btnUnload_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = null;
+            Clips.Clear();
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
         {
             if (clipsFolderDialog.ShowDialog() == DialogResult.OK)
             {
@@ -89,14 +165,23 @@ namespace ClipReviewer.Controls
             }
         }
 
-        private void txtBoxClipsFolderLocation_TextChanged(object sender, EventArgs e)
+        #region KeyBinds & Shortcuts
+        private bool dataSortAscending = false;
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            RefreshUI();
-            if (isClipFolderValid)
-            {
-                int clipsCount = GetClipFiles(txtBoxClipsFolderLocation.Text).Count();
-                btnClipDataLoad.Text = $"Load ({clipsCount})";
-            }
+            SortDataGridViewByProperty(dataGridView1.Columns[e.ColumnIndex].DataPropertyName, ref dataSortAscending);
+        }
+
+        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+                dataGridView1.AutoResizeColumns();
+        }
+        #endregion
+
+        private void btnUnload_MouseEnter(object sender, EventArgs e)
+        {
+
         }
     }
 }

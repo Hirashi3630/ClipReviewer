@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Xabe.FFmpeg.Downloader;
 using Xabe.FFmpeg;
+using ClipReviewer.Utils;
 
 namespace ClipReviewer
 {
@@ -16,17 +17,21 @@ namespace ClipReviewer
         // https://stackoverflow.com/a/6486819/10806542
         static Mutex mutex = new Mutex(false, "Hirashi3630-ClipReviewer");
 
-        private static void DownloadFFmpeg()
+        private static async Task DownloadFFmpeg()
         {
             string ffmpegDir = Path.Combine(AppContext.BaseDirectory, "FFmpeg");
             if (!Directory.Exists(ffmpegDir))
                 Directory.CreateDirectory(ffmpegDir);
             if (!File.Exists(Path.Combine(ffmpegDir, "ffmpeg.exe")))
-                FFmpegDownloader.GetLatestVersion(FFmpegVersion.Full, ffmpegDir, null);
+            {
+                Console.WriteLine("Downloading FFmpeg, please wait...");
+                await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Full, ffmpegDir, null);
+                Console.WriteLine("FFmpeg downloaded!");
+            }
 
             if (!File.Exists(Path.Combine(ffmpegDir, "ffmpeg.exe")) ||
                 !File.Exists(Path.Combine(ffmpegDir, "ffprobe.exe")))
-                throw new Exception("Unable to download ffmpeg! Check your internet connection or download manually to /ffmpeg folder!");
+                throw new Exception("Unable to download FFmpeg! Check your internet connection or download manually to /FFmpeg folder!");
 
             FFmpeg.SetExecutablesPath(ffmpegDir);
         }
@@ -36,10 +41,10 @@ namespace ClipReviewer
         {
             if (!mutex.WaitOne(TimeSpan.FromSeconds(1), false))
             {
-                MessageBox.Show(
+                MsgBox.Error(
                     "   Application is already running!\r\n" +
                     "   Only One instance of ClipReviewer can run at the same time!",
-                    "Instance Issue", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    "Instance Issue");
                 return;
             }
 
@@ -58,7 +63,7 @@ namespace ClipReviewer
             // try to download ffmpeg
             try
             {
-                DownloadFFmpeg();
+                Task.Run(() => DownloadFFmpeg()).Wait();
             }
             catch (Exception ex)
             {

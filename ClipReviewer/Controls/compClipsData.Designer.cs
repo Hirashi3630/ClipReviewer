@@ -32,9 +32,10 @@
             this.clipsFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnUnload = new System.Windows.Forms.Button();
             this.txtBoxClipsFolderLocation = new System.Windows.Forms.TextBox();
-            this.btnClipDataLoad = new System.Windows.Forms.Button();
-            this.btnClipsFolderBrowse = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
+            this.btnBrowse = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -48,7 +49,6 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 33);
@@ -57,13 +57,14 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.RowTemplate.Height = 15;
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(533, 416);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            this.dataGridView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseClick);
             // 
             // tableLayoutPanel1
             // 
@@ -85,15 +86,28 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnUnload);
             this.panel1.Controls.Add(this.txtBoxClipsFolderLocation);
-            this.panel1.Controls.Add(this.btnClipDataLoad);
-            this.panel1.Controls.Add(this.btnClipsFolderBrowse);
+            this.panel1.Controls.Add(this.btnLoad);
+            this.panel1.Controls.Add(this.btnBrowse);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(533, 33);
             this.panel1.TabIndex = 12;
+            // 
+            // btnUnload
+            // 
+            this.btnUnload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUnload.Location = new System.Drawing.Point(455, 7);
+            this.btnUnload.Name = "btnUnload";
+            this.btnUnload.Size = new System.Drawing.Size(75, 23);
+            this.btnUnload.TabIndex = 2;
+            this.btnUnload.Text = "Unload";
+            this.btnUnload.UseVisualStyleBackColor = true;
+            this.btnUnload.Click += new System.EventHandler(this.btnUnload_Click);
+            this.btnUnload.MouseEnter += new System.EventHandler(this.btnUnload_MouseEnter);
             // 
             // txtBoxClipsFolderLocation
             // 
@@ -102,31 +116,31 @@
             this.txtBoxClipsFolderLocation.Location = new System.Drawing.Point(0, 7);
             this.txtBoxClipsFolderLocation.Name = "txtBoxClipsFolderLocation";
             this.txtBoxClipsFolderLocation.PlaceholderText = "C:\\path\\to\\your\\clips\\folder";
-            this.txtBoxClipsFolderLocation.Size = new System.Drawing.Size(368, 23);
+            this.txtBoxClipsFolderLocation.Size = new System.Drawing.Size(287, 23);
             this.txtBoxClipsFolderLocation.TabIndex = 0;
-            this.txtBoxClipsFolderLocation.TextChanged += new System.EventHandler(this.txtBoxClipsFolderLocation_TextChanged);
+            this.txtBoxClipsFolderLocation.TextChanged += new System.EventHandler(this.RefreshUI);
             // 
-            // btnClipDataLoad
+            // btnLoad
             // 
-            this.btnClipDataLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClipDataLoad.Location = new System.Drawing.Point(455, 7);
-            this.btnClipDataLoad.Name = "btnClipDataLoad";
-            this.btnClipDataLoad.Size = new System.Drawing.Size(75, 23);
-            this.btnClipDataLoad.TabIndex = 0;
-            this.btnClipDataLoad.Text = "Load";
-            this.btnClipDataLoad.UseVisualStyleBackColor = true;
-            this.btnClipDataLoad.Click += new System.EventHandler(this.btnClipDataLoad_Click);
+            this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoad.Location = new System.Drawing.Point(374, 7);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnLoad.TabIndex = 0;
+            this.btnLoad.Text = "Load";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
-            // btnClipsFolderBrowse
+            // btnBrowse
             // 
-            this.btnClipsFolderBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClipsFolderBrowse.Location = new System.Drawing.Point(374, 7);
-            this.btnClipsFolderBrowse.Name = "btnClipsFolderBrowse";
-            this.btnClipsFolderBrowse.Size = new System.Drawing.Size(75, 23);
-            this.btnClipsFolderBrowse.TabIndex = 1;
-            this.btnClipsFolderBrowse.Text = "Browse";
-            this.btnClipsFolderBrowse.UseVisualStyleBackColor = true;
-            this.btnClipsFolderBrowse.Click += new System.EventHandler(this.btnClipsFolderBrowse_Click);
+            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowse.Location = new System.Drawing.Point(293, 7);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowse.TabIndex = 1;
+            this.btnBrowse.Text = "Browse";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // progressBar1
             // 
@@ -172,8 +186,9 @@
         private ProgressBar progressBar1;
         private Panel panel1;
         private TextBox txtBoxClipsFolderLocation;
-        private Button btnClipDataLoad;
-        private Button btnClipsFolderBrowse;
+        private Button btnLoad;
+        private Button btnBrowse;
         private GroupBox groupBox1;
+        private Button btnUnload;
     }
 }

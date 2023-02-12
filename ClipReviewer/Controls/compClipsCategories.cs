@@ -13,6 +13,18 @@ namespace ClipReviewer
 {
     public partial class compClipsCategories : UserControl
     {
+        private bool m_ReviewInProgress = false;
+        public bool ReviewInProgress
+        {
+            get => m_ReviewInProgress;
+            set
+            {
+                m_ReviewInProgress = value;
+                
+                pButtons.Enabled = !value;
+            }
+        }
+
         public List<string> Categories => listBox.Items.Cast<string>().ToList();
 
         public compClipsCategories()

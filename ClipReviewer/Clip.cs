@@ -1,4 +1,5 @@
-﻿using Force.Crc32;
+﻿using ClipReviewer.Utils;
+using Force.Crc32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,30 +13,42 @@ namespace ClipReviewer
 {
     public class Clip
     {
-        public uint ID { get; private set; }
+        public uint ID { get; set; }
         public string FileName => Path.GetFileName(FullFilePath);
         public DateTime CreatedDate => File.GetCreationTime(FullFilePath);
+        public TimeSpan VideoDuration { get; }
         public string Category { get; private set; }
         public string Description { get; private set; }
-        public string FullFilePath { get; private set; }
-        public string ThumbnailPath { get; set; }
+        public string FullFilePath { get; }
+        public string ThumbnailPath { get; private set; }
 
-        public static async Task<Clip> New(uint id, string fullFilePath, string category = "", string description = "")
+        public static async Task<Clip> New(string fullFilePath, uint id = 0, string category = "", string description = "")
         {
             //string output = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".png");
-            string thumbnailPath = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(fullFilePath) + ".png");
+            string thumbnailPath = Path.Combine(Path.GetTempPath(), "ClipReviewer_Thumbnails", Path.GetFileNameWithoutExtension(fullFilePath) + ".png");
             // TODO: faster hash or something similar
             //var hash = GetCRC32C(fullFilePath);
             //string thumbnailPath = Path.Combine(Path.GetTempPath(), hash + ".png");
+
+            TimeSpan videoDuration = TimeSpan.Zero;
+
+            var snapAt = TimeSpan.FromSeconds(19); // TODO: grab from setting
+            IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(fullFilePath);
+            videoDuration = mediaInfo.VideoStreams.First().Duration;
 
             if (!File.Exists(thumbnailPath))
             {
                 try
                 {
-                    IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(fullFilePath);
-                    var videoDuration = mediaInfo.VideoStreams.First().Duration;
-                    Console.WriteLine(videoDuration);
-                    IConversion conversion = await FFmpeg.Conversions.FromSnippet.Snapshot(fullFilePath, thumbnailPath, TimeSpan.FromSeconds(19));
+                    if (snapAt > videoDuration)
+                    {
+                        snapAt = videoDuration / 2;
+                        MsgBox.Warning(
+                            $"\"{Path.GetFileName(fullFilePath)}\" was shorter than SnapTo value!\r\n" +
+                            $"Consider setting percentage instead of absolute values in the settings.\r\n\r\n" +
+                            $"(You can disable this warning in the settings)", buttons: MessageBoxButtons.OK);
+                    }
+                    IConversion conversion = await FFmpeg.Conversions.FromSnippet.Snapshot(fullFilePath, thumbnailPath, snapAt);
                     IConversionResult result = await conversion.Start();
                 }
                 catch (Exception ex)
@@ -43,13 +56,14 @@ namespace ClipReviewer
                     Console.WriteLine(ex.Message);
                 }
             }
-            return new Clip(id, fullFilePath, category, description, thumbnailPath);
+            return new Clip(id, fullFilePath, videoDuration, category, description, thumbnailPath);
         }
         
-        private Clip(uint id, string fullFilePath, string category = "", string description = "", string thumbnailPath = "")
+        private Clip(uint id, string fullFilePath, TimeSpan videoDuration, string category = "", string description = "", string thumbnailPath = "")
         {
             ID = id;
             FullFilePath = fullFilePath;
+            VideoDuration = videoDuration;
             Category = category;
             Description = description;
             ThumbnailPath = thumbnailPath;

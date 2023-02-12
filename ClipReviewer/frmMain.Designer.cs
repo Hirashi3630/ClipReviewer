@@ -40,18 +40,22 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compClipsData1 = new ClipReviewer.Controls.compClipsData();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCommitReview = new System.Windows.Forms.Button();
+            this.btnPauseReview = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStartReview
             // 
             this.btnStartReview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStartReview.Location = new System.Drawing.Point(676, 357);
+            this.btnStartReview.Location = new System.Drawing.Point(397, 11);
             this.btnStartReview.Name = "btnStartReview";
-            this.btnStartReview.Size = new System.Drawing.Size(81, 42);
+            this.btnStartReview.Size = new System.Drawing.Size(60, 33);
             this.btnStartReview.TabIndex = 7;
-            this.btnStartReview.Text = "Start &Reviewing";
+            this.btnStartReview.Text = "Start";
             this.btnStartReview.UseVisualStyleBackColor = true;
             this.btnStartReview.Click += new System.EventHandler(this.btnStartReview_Click);
             // 
@@ -61,7 +65,8 @@
             this.compClipsCategories1.Location = new System.Drawing.Point(3, 10);
             this.compClipsCategories1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.compClipsCategories1.Name = "compClipsCategories1";
-            this.compClipsCategories1.Size = new System.Drawing.Size(374, 333);
+            this.compClipsCategories1.ReviewInProgress = false;
+            this.compClipsCategories1.Size = new System.Drawing.Size(294, 333);
             this.compClipsCategories1.TabIndex = 0;
             // 
             // menuStrip1
@@ -98,33 +103,33 @@
             // githubWikiToolStripMenuItem
             // 
             this.githubWikiToolStripMenuItem.Name = "githubWikiToolStripMenuItem";
-            this.githubWikiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.githubWikiToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.githubWikiToolStripMenuItem.Text = "Open &Wiki";
             this.githubWikiToolStripMenuItem.Click += new System.EventHandler(this.githubWikiToolStripMenuItem_Click);
             // 
             // reportIssueToolStripMenuItem
             // 
             this.reportIssueToolStripMenuItem.Name = "reportIssueToolStripMenuItem";
-            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.reportIssueToolStripMenuItem.Text = "Report &Issue";
             this.reportIssueToolStripMenuItem.Click += new System.EventHandler(this.reportIssueToolStripMenuItem_Click);
             // 
             // checkUpdatesToolStripMenuItem
             // 
             this.checkUpdatesToolStripMenuItem.Name = "checkUpdatesToolStripMenuItem";
-            this.checkUpdatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.checkUpdatesToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.checkUpdatesToolStripMenuItem.Text = "Check for &Updates";
             this.checkUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkUpdatesToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(168, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -132,21 +137,22 @@
             // 
             this.compClipsData1.Clips = null;
             this.compClipsData1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compClipsData1.Location = new System.Drawing.Point(383, 10);
+            this.compClipsData1.Location = new System.Drawing.Point(303, 10);
             this.compClipsData1.LockedSelection = -1;
             this.compClipsData1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.compClipsData1.Name = "compClipsData1";
-            this.compClipsData1.Size = new System.Drawing.Size(374, 333);
+            this.compClipsData1.ReviewInProgress = false;
+            this.compClipsData1.Size = new System.Drawing.Size(454, 333);
             this.compClipsData1.TabIndex = 0;
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.compClipsCategories1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnStartReview, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.compClipsData1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -156,6 +162,38 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(760, 402);
             this.tableLayoutPanel1.TabIndex = 13;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnCommitReview);
+            this.panel1.Controls.Add(this.btnPauseReview);
+            this.panel1.Controls.Add(this.btnStartReview);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(300, 353);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(460, 49);
+            this.panel1.TabIndex = 14;
+            // 
+            // btnCommitReview
+            // 
+            this.btnCommitReview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCommitReview.Location = new System.Drawing.Point(265, 11);
+            this.btnCommitReview.Name = "btnCommitReview";
+            this.btnCommitReview.Size = new System.Drawing.Size(60, 33);
+            this.btnCommitReview.TabIndex = 8;
+            this.btnCommitReview.Text = "Commit";
+            this.btnCommitReview.UseVisualStyleBackColor = true;
+            // 
+            // btnPauseReview
+            // 
+            this.btnPauseReview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPauseReview.Location = new System.Drawing.Point(331, 11);
+            this.btnPauseReview.Name = "btnPauseReview";
+            this.btnPauseReview.Size = new System.Drawing.Size(60, 33);
+            this.btnPauseReview.TabIndex = 0;
+            this.btnPauseReview.Text = "Pause";
+            this.btnPauseReview.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -172,6 +210,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,5 +229,8 @@
         private TableLayoutPanel tableLayoutPanel1;
         private ToolStripMenuItem checkUpdatesToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
+        private Panel panel1;
+        private Button btnPauseReview;
+        private Button btnCommitReview;
     }
 }

@@ -12,12 +12,32 @@
     <PackageProjectUrl>https://github.com/Hirashi3630/ClipReviewer</PackageProjectUrl>
     <Copyright></Copyright>
     <Title>Clip Reviewer</Title>
+    <Authors>Hirashi3630</Authors>
+    <ApplicationIcon>Resources\Icons\v1\ClipReviewer_Icon_v1@064.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\Icons\v1\ClipReviewer_Icon_v1%40016.png" />
+    <None Include="Resources\Icons\v1\ClipReviewer_Icon_v1%40032.png" />
+    <None Include="Resources\Icons\v1\ClipReviewer_Icon_v1%40064.png" />
+    <None Include="Resources\Icons\v1\ClipReviewer_Icon_v1%40128.png" />
+    <None Include="Resources\Icons\v1\ClipReviewer_Icon_v1%40256.png" />
+    <None Include="Resources\Icons\v1\ClipReviewer_Icon_v1%40512.png" />
+    <Content Include="Resources\Icons\v1\ClipReviewer_Icon_v1@064.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Crc32.NET" Version="1.2.0" />
-    <PackageReference Include="Xabe.FFmpeg" Version="5.2.4" />
-    <PackageReference Include="Xabe.FFmpeg.Downloader" Version="5.2.4" />
+    <PackageReference Include="CSRakowski.ParallelAsync" Version="1.7.2" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.25" />
+    <PackageReference Include="Xabe.FFmpeg" Version="5.2.5" />
+    <PackageReference Include="Xabe.FFmpeg.Downloader" Version="5.2.5" />
   </ItemGroup>
 
   <ItemGroup>

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("General");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Clip Review");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Misc");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("General");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Clip Loader");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Misc");
             this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
             this.pSearch = new System.Windows.Forms.Panel();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -40,29 +40,39 @@
             this.tabControler = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.gBoxGeneral = new System.Windows.Forms.GroupBox();
-            this.tabClipReview = new System.Windows.Forms.TabPage();
+            this.flowLayoutGeneral = new System.Windows.Forms.FlowLayoutPanel();
+            this.cBoxTopMostWhileReviewing = new System.Windows.Forms.CheckBox();
+            this.tabClipLoader = new System.Windows.Forms.TabPage();
             this.bBoxClipReview = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pClipReviewAutoSeek = new System.Windows.Forms.Panel();
-            this.gBoxClipReviewAutoSeek = new System.Windows.Forms.GroupBox();
+            this.pThumbnailGenerator = new System.Windows.Forms.Panel();
+            this.gBoxThumbnailGenerator = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtBoxThumbnailGeneratorTime = new System.Windows.Forms.TextBox();
+            this.cBoxIgnoreThumbnailWarning = new System.Windows.Forms.CheckBox();
+            this.cBoxThumbnailGenerator = new System.Windows.Forms.CheckBox();
+            this.pAutoSeek = new System.Windows.Forms.Panel();
+            this.gBoxAutoSeek = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtBoxClipReviewAutoSeekTime = new System.Windows.Forms.TextBox();
-            this.cBoxClipReviewAutoSeekEnabled = new System.Windows.Forms.CheckBox();
+            this.txtBoxAutoSeekTime = new System.Windows.Forms.TextBox();
+            this.cBoxAutoSeekEnabled = new System.Windows.Forms.CheckBox();
             this.tabMisc = new System.Windows.Forms.TabPage();
             this.gBoxMisc = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnDiscardChanges = new System.Windows.Forms.Button();
             this.btnSaveChanges = new System.Windows.Forms.Button();
-            this.ttSeekToTxtBox = new System.Windows.Forms.ToolTip(this.components);
+            this.tt = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutMain.SuspendLayout();
             this.pSearch.SuspendLayout();
             this.tabControler.SuspendLayout();
             this.tabGeneral.SuspendLayout();
-            this.tabClipReview.SuspendLayout();
+            this.gBoxGeneral.SuspendLayout();
+            this.flowLayoutGeneral.SuspendLayout();
+            this.tabClipLoader.SuspendLayout();
             this.bBoxClipReview.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.pClipReviewAutoSeek.SuspendLayout();
-            this.gBoxClipReviewAutoSeek.SuspendLayout();
+            this.pThumbnailGenerator.SuspendLayout();
+            this.gBoxThumbnailGenerator.SuspendLayout();
+            this.pAutoSeek.SuspendLayout();
+            this.gBoxAutoSeek.SuspendLayout();
             this.tabMisc.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -124,24 +134,24 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewSearch.Location = new System.Drawing.Point(0, 32);
             this.treeViewSearch.Name = "treeViewSearch";
-            treeNode4.Name = "General";
-            treeNode4.Text = "General";
-            treeNode5.Name = "ClipReview";
-            treeNode5.Text = "Clip Review";
-            treeNode6.Name = "Misc";
-            treeNode6.Text = "Misc";
+            treeNode1.Name = "General";
+            treeNode1.Text = "General";
+            treeNode2.Name = "ClipLoader";
+            treeNode2.Text = "Clip Loader";
+            treeNode3.Name = "Misc";
+            treeNode3.Text = "Misc";
             this.treeViewSearch.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
-            this.treeViewSearch.Size = new System.Drawing.Size(250, 380);
+            treeNode1,
+            treeNode2,
+            treeNode3});
+            this.treeViewSearch.Size = new System.Drawing.Size(250, 342);
             this.treeViewSearch.TabIndex = 0;
             this.treeViewSearch.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSearch_AfterSelect);
             // 
             // tabControler
             // 
             this.tabControler.Controls.Add(this.tabGeneral);
-            this.tabControler.Controls.Add(this.tabClipReview);
+            this.tabControler.Controls.Add(this.tabClipLoader);
             this.tabControler.Controls.Add(this.tabMisc);
             this.tabControler.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControler.Location = new System.Drawing.Point(273, 3);
@@ -164,6 +174,7 @@
             // 
             // gBoxGeneral
             // 
+            this.gBoxGeneral.Controls.Add(this.flowLayoutGeneral);
             this.gBoxGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gBoxGeneral.Location = new System.Drawing.Point(3, 3);
             this.gBoxGeneral.Name = "gBoxGeneral";
@@ -172,20 +183,41 @@
             this.gBoxGeneral.TabStop = false;
             this.gBoxGeneral.Text = "General";
             // 
-            // tabClipReview
+            // flowLayoutGeneral
             // 
-            this.tabClipReview.Controls.Add(this.bBoxClipReview);
-            this.tabClipReview.Location = new System.Drawing.Point(4, 24);
-            this.tabClipReview.Name = "tabClipReview";
-            this.tabClipReview.Padding = new System.Windows.Forms.Padding(3);
-            this.tabClipReview.Size = new System.Drawing.Size(420, 398);
-            this.tabClipReview.TabIndex = 2;
-            this.tabClipReview.Text = "ClipReview";
-            this.tabClipReview.UseVisualStyleBackColor = true;
+            this.flowLayoutGeneral.Controls.Add(this.cBoxTopMostWhileReviewing);
+            this.flowLayoutGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutGeneral.Location = new System.Drawing.Point(3, 19);
+            this.flowLayoutGeneral.Name = "flowLayoutGeneral";
+            this.flowLayoutGeneral.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
+            this.flowLayoutGeneral.Size = new System.Drawing.Size(408, 370);
+            this.flowLayoutGeneral.TabIndex = 0;
+            // 
+            // cBoxTopMostWhileReviewing
+            // 
+            this.cBoxTopMostWhileReviewing.AutoSize = true;
+            this.cBoxTopMostWhileReviewing.Location = new System.Drawing.Point(8, 5);
+            this.cBoxTopMostWhileReviewing.Name = "cBoxTopMostWhileReviewing";
+            this.cBoxTopMostWhileReviewing.Size = new System.Drawing.Size(273, 19);
+            this.cBoxTopMostWhileReviewing.TabIndex = 0;
+            this.cBoxTopMostWhileReviewing.Text = "Keep application pinned at top while reviewing";
+            this.cBoxTopMostWhileReviewing.UseVisualStyleBackColor = true;
+            // 
+            // tabClipLoader
+            // 
+            this.tabClipLoader.Controls.Add(this.bBoxClipReview);
+            this.tabClipLoader.Location = new System.Drawing.Point(4, 24);
+            this.tabClipLoader.Name = "tabClipLoader";
+            this.tabClipLoader.Padding = new System.Windows.Forms.Padding(3);
+            this.tabClipLoader.Size = new System.Drawing.Size(420, 398);
+            this.tabClipLoader.TabIndex = 2;
+            this.tabClipLoader.Text = "ClipLoader";
+            this.tabClipLoader.UseVisualStyleBackColor = true;
             // 
             // bBoxClipReview
             // 
-            this.bBoxClipReview.Controls.Add(this.flowLayoutPanel1);
+            this.bBoxClipReview.Controls.Add(this.pThumbnailGenerator);
+            this.bBoxClipReview.Controls.Add(this.pAutoSeek);
             this.bBoxClipReview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bBoxClipReview.Location = new System.Drawing.Point(3, 3);
             this.bBoxClipReview.Name = "bBoxClipReview";
@@ -194,65 +226,121 @@
             this.bBoxClipReview.TabStop = false;
             this.bBoxClipReview.Text = "Clip Review";
             // 
-            // flowLayoutPanel1
+            // pThumbnailGenerator
             // 
-            this.flowLayoutPanel1.Controls.Add(this.pClipReviewAutoSeek);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 19);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(408, 370);
-            this.flowLayoutPanel1.TabIndex = 0;
+            this.pThumbnailGenerator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pThumbnailGenerator.Controls.Add(this.gBoxThumbnailGenerator);
+            this.pThumbnailGenerator.Location = new System.Drawing.Point(3, 148);
+            this.pThumbnailGenerator.Name = "pThumbnailGenerator";
+            this.pThumbnailGenerator.Size = new System.Drawing.Size(405, 115);
+            this.pThumbnailGenerator.TabIndex = 0;
             // 
-            // pClipReviewAutoSeek
+            // gBoxThumbnailGenerator
             // 
-            this.pClipReviewAutoSeek.Controls.Add(this.gBoxClipReviewAutoSeek);
-            this.pClipReviewAutoSeek.Location = new System.Drawing.Point(0, 0);
-            this.pClipReviewAutoSeek.Margin = new System.Windows.Forms.Padding(0);
-            this.pClipReviewAutoSeek.Name = "pClipReviewAutoSeek";
-            this.pClipReviewAutoSeek.Size = new System.Drawing.Size(408, 100);
-            this.pClipReviewAutoSeek.TabIndex = 2;
+            this.gBoxThumbnailGenerator.Controls.Add(this.label2);
+            this.gBoxThumbnailGenerator.Controls.Add(this.txtBoxThumbnailGeneratorTime);
+            this.gBoxThumbnailGenerator.Controls.Add(this.cBoxIgnoreThumbnailWarning);
+            this.gBoxThumbnailGenerator.Controls.Add(this.cBoxThumbnailGenerator);
+            this.gBoxThumbnailGenerator.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gBoxThumbnailGenerator.Location = new System.Drawing.Point(0, 0);
+            this.gBoxThumbnailGenerator.Name = "gBoxThumbnailGenerator";
+            this.gBoxThumbnailGenerator.Size = new System.Drawing.Size(405, 115);
+            this.gBoxThumbnailGenerator.TabIndex = 3;
+            this.gBoxThumbnailGenerator.TabStop = false;
             // 
-            // gBoxClipReviewAutoSeek
+            // label2
             // 
-            this.gBoxClipReviewAutoSeek.Controls.Add(this.label1);
-            this.gBoxClipReviewAutoSeek.Controls.Add(this.txtBoxClipReviewAutoSeekTime);
-            this.gBoxClipReviewAutoSeek.Controls.Add(this.cBoxClipReviewAutoSeekEnabled);
-            this.gBoxClipReviewAutoSeek.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gBoxClipReviewAutoSeek.Location = new System.Drawing.Point(0, 0);
-            this.gBoxClipReviewAutoSeek.Name = "gBoxClipReviewAutoSeek";
-            this.gBoxClipReviewAutoSeek.Size = new System.Drawing.Size(408, 100);
-            this.gBoxClipReviewAutoSeek.TabIndex = 1;
-            this.gBoxClipReviewAutoSeek.TabStop = false;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(11, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Snap at:";
+            // 
+            // txtBoxThumbnailGeneratorTime
+            // 
+            this.txtBoxThumbnailGeneratorTime.Location = new System.Drawing.Point(65, 25);
+            this.txtBoxThumbnailGeneratorTime.Name = "txtBoxThumbnailGeneratorTime";
+            this.txtBoxThumbnailGeneratorTime.Size = new System.Drawing.Size(189, 23);
+            this.txtBoxThumbnailGeneratorTime.TabIndex = 3;
+            this.txtBoxThumbnailGeneratorTime.MouseEnter += new System.EventHandler(this.txtBoxThumbnailGeneratorTime_MouseEnter);
+            this.txtBoxThumbnailGeneratorTime.MouseLeave += new System.EventHandler(this.HideTT);
+            // 
+            // cBoxIgnoreThumbnailWarning
+            // 
+            this.cBoxIgnoreThumbnailWarning.AutoSize = true;
+            this.cBoxIgnoreThumbnailWarning.Location = new System.Drawing.Point(11, 54);
+            this.cBoxIgnoreThumbnailWarning.Name = "cBoxIgnoreThumbnailWarning";
+            this.cBoxIgnoreThumbnailWarning.Size = new System.Drawing.Size(291, 19);
+            this.cBoxIgnoreThumbnailWarning.TabIndex = 3;
+            this.cBoxIgnoreThumbnailWarning.Text = "Ignore warning if value is higher then video length";
+            this.cBoxIgnoreThumbnailWarning.UseVisualStyleBackColor = true;
+            // 
+            // cBoxThumbnailGenerator
+            // 
+            this.cBoxThumbnailGenerator.AutoSize = true;
+            this.cBoxThumbnailGenerator.BackColor = System.Drawing.SystemColors.Control;
+            this.cBoxThumbnailGenerator.Location = new System.Drawing.Point(6, 0);
+            this.cBoxThumbnailGenerator.Name = "cBoxThumbnailGenerator";
+            this.cBoxThumbnailGenerator.Size = new System.Drawing.Size(138, 19);
+            this.cBoxThumbnailGenerator.TabIndex = 0;
+            this.cBoxThumbnailGenerator.Text = "Thumbnail Generator";
+            this.cBoxThumbnailGenerator.UseVisualStyleBackColor = false;
+            this.cBoxThumbnailGenerator.CheckedChanged += new System.EventHandler(this.RefreshUI);
+            // 
+            // pAutoSeek
+            // 
+            this.pAutoSeek.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pAutoSeek.Controls.Add(this.gBoxAutoSeek);
+            this.pAutoSeek.Location = new System.Drawing.Point(3, 19);
+            this.pAutoSeek.Margin = new System.Windows.Forms.Padding(0);
+            this.pAutoSeek.Name = "pAutoSeek";
+            this.pAutoSeek.Size = new System.Drawing.Size(405, 123);
+            this.pAutoSeek.TabIndex = 2;
+            // 
+            // gBoxAutoSeek
+            // 
+            this.gBoxAutoSeek.Controls.Add(this.label1);
+            this.gBoxAutoSeek.Controls.Add(this.txtBoxAutoSeekTime);
+            this.gBoxAutoSeek.Controls.Add(this.cBoxAutoSeekEnabled);
+            this.gBoxAutoSeek.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gBoxAutoSeek.Location = new System.Drawing.Point(0, 0);
+            this.gBoxAutoSeek.Name = "gBoxAutoSeek";
+            this.gBoxAutoSeek.Size = new System.Drawing.Size(405, 123);
+            this.gBoxAutoSeek.TabIndex = 1;
+            this.gBoxAutoSeek.TabStop = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 28);
+            this.label1.Location = new System.Drawing.Point(11, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "Seek to:";
             // 
-            // txtBoxClipReviewAutoSeekTime
+            // txtBoxAutoSeekTime
             // 
-            this.txtBoxClipReviewAutoSeekTime.Location = new System.Drawing.Point(60, 25);
-            this.txtBoxClipReviewAutoSeekTime.Name = "txtBoxClipReviewAutoSeekTime";
-            this.txtBoxClipReviewAutoSeekTime.Size = new System.Drawing.Size(189, 23);
-            this.txtBoxClipReviewAutoSeekTime.TabIndex = 1;
-            this.ttSeekToTxtBox.SetToolTip(this.txtBoxClipReviewAutoSeekTime, "Time that you want to automatically seek to\r\nType % at the end if you want to use" +
-        " percentages\r\nUsage: 13 or 50%\r\nDefault: 0");
+            this.txtBoxAutoSeekTime.Location = new System.Drawing.Point(65, 25);
+            this.txtBoxAutoSeekTime.Name = "txtBoxAutoSeekTime";
+            this.txtBoxAutoSeekTime.Size = new System.Drawing.Size(189, 23);
+            this.txtBoxAutoSeekTime.TabIndex = 1;
+            this.txtBoxAutoSeekTime.MouseEnter += new System.EventHandler(this.txtBoxAutoSeekTime_MouseEnter);
+            this.txtBoxAutoSeekTime.MouseLeave += new System.EventHandler(this.HideTT);
             // 
-            // cBoxClipReviewAutoSeekEnabled
+            // cBoxAutoSeekEnabled
             // 
-            this.cBoxClipReviewAutoSeekEnabled.AutoSize = true;
-            this.cBoxClipReviewAutoSeekEnabled.BackColor = System.Drawing.SystemColors.Control;
-            this.cBoxClipReviewAutoSeekEnabled.Location = new System.Drawing.Point(6, 0);
-            this.cBoxClipReviewAutoSeekEnabled.Name = "cBoxClipReviewAutoSeekEnabled";
-            this.cBoxClipReviewAutoSeekEnabled.Size = new System.Drawing.Size(79, 19);
-            this.cBoxClipReviewAutoSeekEnabled.TabIndex = 0;
-            this.cBoxClipReviewAutoSeekEnabled.Text = "Auto Seek";
-            this.cBoxClipReviewAutoSeekEnabled.UseVisualStyleBackColor = false;
-            this.cBoxClipReviewAutoSeekEnabled.CheckedChanged += new System.EventHandler(this.RefreshUI);
+            this.cBoxAutoSeekEnabled.AutoSize = true;
+            this.cBoxAutoSeekEnabled.BackColor = System.Drawing.SystemColors.Control;
+            this.cBoxAutoSeekEnabled.Location = new System.Drawing.Point(6, 0);
+            this.cBoxAutoSeekEnabled.Name = "cBoxAutoSeekEnabled";
+            this.cBoxAutoSeekEnabled.Size = new System.Drawing.Size(79, 19);
+            this.cBoxAutoSeekEnabled.TabIndex = 0;
+            this.cBoxAutoSeekEnabled.Text = "Auto Seek";
+            this.cBoxAutoSeekEnabled.UseVisualStyleBackColor = false;
+            this.cBoxAutoSeekEnabled.CheckedChanged += new System.EventHandler(this.RefreshUI);
             // 
             // tabMisc
             // 
@@ -293,7 +381,7 @@
             this.btnDiscardChanges.FlatAppearance.BorderSize = 0;
             this.btnDiscardChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDiscardChanges.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnDiscardChanges.Location = new System.Drawing.Point(288, 3);
+            this.btnDiscardChanges.Location = new System.Drawing.Point(-110, 3);
             this.btnDiscardChanges.Name = "btnDiscardChanges";
             this.btnDiscardChanges.Size = new System.Drawing.Size(62, 23);
             this.btnDiscardChanges.TabIndex = 1;
@@ -305,13 +393,17 @@
             // 
             this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveChanges.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSaveChanges.Location = new System.Drawing.Point(356, 3);
+            this.btnSaveChanges.Location = new System.Drawing.Point(-42, 3);
             this.btnSaveChanges.Name = "btnSaveChanges";
             this.btnSaveChanges.Size = new System.Drawing.Size(75, 23);
             this.btnSaveChanges.TabIndex = 0;
             this.btnSaveChanges.Text = "&Save";
             this.btnSaveChanges.UseVisualStyleBackColor = true;
             this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
+            // 
+            // tt
+            // 
+            this.tt.AutomaticDelay = 1;
             // 
             // frmSettings
             // 
@@ -331,12 +423,17 @@
             this.pSearch.PerformLayout();
             this.tabControler.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
-            this.tabClipReview.ResumeLayout(false);
+            this.gBoxGeneral.ResumeLayout(false);
+            this.flowLayoutGeneral.ResumeLayout(false);
+            this.flowLayoutGeneral.PerformLayout();
+            this.tabClipLoader.ResumeLayout(false);
             this.bBoxClipReview.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.pClipReviewAutoSeek.ResumeLayout(false);
-            this.gBoxClipReviewAutoSeek.ResumeLayout(false);
-            this.gBoxClipReviewAutoSeek.PerformLayout();
+            this.pThumbnailGenerator.ResumeLayout(false);
+            this.gBoxThumbnailGenerator.ResumeLayout(false);
+            this.gBoxThumbnailGenerator.PerformLayout();
+            this.pAutoSeek.ResumeLayout(false);
+            this.gBoxAutoSeek.ResumeLayout(false);
+            this.gBoxAutoSeek.PerformLayout();
             this.tabMisc.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -358,14 +455,21 @@
         private Panel panel1;
         private Button btnDiscardChanges;
         private Button btnSaveChanges;
-        private TabPage tabClipReview;
+        private TabPage tabClipLoader;
         private GroupBox bBoxClipReview;
-        private FlowLayoutPanel flowLayoutPanel1;
-        private GroupBox gBoxClipReviewAutoSeek;
-        private CheckBox cBoxClipReviewAutoSeekEnabled;
-        private Panel pClipReviewAutoSeek;
+        private GroupBox gBoxAutoSeek;
+        private CheckBox cBoxAutoSeekEnabled;
         private Label label1;
-        private TextBox txtBoxClipReviewAutoSeekTime;
-        private ToolTip ttSeekToTxtBox;
+        private TextBox txtBoxAutoSeekTime;
+        private CheckBox cBoxIgnoreThumbnailWarning;
+        private ToolTip tt;
+        private Panel pAutoSeek;
+        private Panel pThumbnailGenerator;
+        private GroupBox gBoxThumbnailGenerator;
+        private CheckBox cBoxThumbnailGenerator;
+        private Label label2;
+        private TextBox txtBoxThumbnailGeneratorTime;
+        private FlowLayoutPanel flowLayoutGeneral;
+        private CheckBox cBoxTopMostWhileReviewing;
     }
 }

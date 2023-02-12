@@ -34,16 +34,16 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.listBox = new System.Windows.Forms.ListBox();
+            this.pButtons = new System.Windows.Forms.Panel();
             this.gBox.SuspendLayout();
+            this.pButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // gBox
             // 
             this.gBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.gBox.Controls.Add(this.btnClear);
+            this.gBox.Controls.Add(this.pButtons);
             this.gBox.Controls.Add(this.txtBox);
-            this.gBox.Controls.Add(this.btnAdd);
-            this.gBox.Controls.Add(this.btnDelete);
             this.gBox.Controls.Add(this.listBox);
             this.gBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gBox.Location = new System.Drawing.Point(0, 0);
@@ -56,7 +56,7 @@
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(513, 80);
+            this.btnClear.Location = new System.Drawing.Point(2, 61);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 6;
@@ -77,7 +77,7 @@
             // btnAdd
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdd.Location = new System.Drawing.Point(513, 22);
+            this.btnAdd.Location = new System.Drawing.Point(2, 3);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 4;
@@ -88,7 +88,7 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(513, 51);
+            this.btnDelete.Location = new System.Drawing.Point(2, 32);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 3;
@@ -117,6 +117,18 @@
             this.listBox.TabIndex = 2;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.RefreshUI);
             // 
+            // pButtons
+            // 
+            this.pButtons.Controls.Add(this.btnAdd);
+            this.pButtons.Controls.Add(this.btnClear);
+            this.pButtons.Controls.Add(this.btnDelete);
+            this.pButtons.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pButtons.Location = new System.Drawing.Point(508, 19);
+            this.pButtons.Margin = new System.Windows.Forms.Padding(0);
+            this.pButtons.Name = "pButtons";
+            this.pButtons.Size = new System.Drawing.Size(83, 519);
+            this.pButtons.TabIndex = 7;
+            // 
             // compClipsCategories
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -126,6 +138,7 @@
             this.Size = new System.Drawing.Size(594, 541);
             this.gBox.ResumeLayout(false);
             this.gBox.PerformLayout();
+            this.pButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -138,5 +151,6 @@
         private Button btnDelete;
         private ListBox listBox;
         private Button btnClear;
+        private Panel pButtons;
     }
 }

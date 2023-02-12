@@ -1,5 +1,6 @@
 ﻿using ClipReviewer.Controls;
 using ClipReviewer.Properties;
+using ClipReviewer.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,20 @@ namespace ClipReviewer
 {
     public partial class frmMain : Form
     {
+        private bool m_ReviewInProgress = false;
+        public bool ReviewInProgress
+        {
+            get => m_ReviewInProgress;
+            set
+            {
+                m_ReviewInProgress = value;
+
+                btnStartReview.Text = $"{(value ? "Stop" : "Start")} &Reviewing";
+                compClipsCategories1.ReviewInProgress = value;
+                compClipsData1.ReviewInProgress = value;
+            }
+        }
+
         public frmMain()
         {
             InitializeComponent();
@@ -35,8 +50,13 @@ namespace ClipReviewer
 
         private void btnStartReview_Click(object sender, EventArgs e)
         {
-            compClipsData1.LockedSelection++;
-            Console.WriteLine(compClipsData1.LockedSelection);
+            if (compClipsData1.Clips == null || compClipsData1.Clips.Count <= 0)
+            {
+                MsgBox.Error("You can not start reviewing without loading clips!");
+                return;
+            }
+            compClipsData1.LockedSelection = 0;
+            ReviewInProgress = !ReviewInProgress;
         }
 
         #region Menu
