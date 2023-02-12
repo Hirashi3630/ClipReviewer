@@ -117,4 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ClipReviewer_Icon_v1_016" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v1\ClipReviewer_Icon_v1@016.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v1_032" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v1\ClipReviewer_Icon_v1@032.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v1_064" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v1\ClipReviewer_Icon_v1@064.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v1_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v1\ClipReviewer_Icon_v1@128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v1_256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v1\ClipReviewer_Icon_v1@256.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v1_512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v1\ClipReviewer_Icon_v1@512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

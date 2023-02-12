@@ -1,4 +1,5 @@
 ﻿using ClipReviewer.Properties;
+using ClipReviewer.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,9 +21,10 @@ namespace ClipReviewer.Controls
             InitializeComponent();
             this.Text = string.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = string.Format("Version {0}", AssemblyVersion);
-            this.labelURL.Text = GITHUB_URL;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.labelAuthor.Text = $"made by {AssemblyCompany}";
+            this.labelVersion.Text = string.Format("v{0}", AssemblyVersion);
+            this.labelURL.Text = "Github";
+            //this.labelURL.Text = GITHUB_URL;
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -32,7 +34,7 @@ namespace ClipReviewer.Controls
 
         private void labelURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            OpenURL(labelURL.Text);
+            OpenURL(GITHUB_URL);
         }
 
         #region Assembly Attribute Accessors
@@ -48,7 +50,7 @@ namespace ClipReviewer.Controls
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unable to open URL in a browser!\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox.Error("Unable to open URL in a browser!\n" + ex.Message);
             }
         }
 

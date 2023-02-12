@@ -59,5 +59,65 @@ namespace ClipReviewer.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ClipReviewer_Icon_v1_016 {
+            get {
+                object obj = ResourceManager.GetObject("ClipReviewer_Icon_v1_016", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ClipReviewer_Icon_v1_032 {
+            get {
+                object obj = ResourceManager.GetObject("ClipReviewer_Icon_v1_032", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ClipReviewer_Icon_v1_064 {
+            get {
+                object obj = ResourceManager.GetObject("ClipReviewer_Icon_v1_064", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ClipReviewer_Icon_v1_128 {
+            get {
+                object obj = ResourceManager.GetObject("ClipReviewer_Icon_v1_128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ClipReviewer_Icon_v1_256 {
+            get {
+                object obj = ResourceManager.GetObject("ClipReviewer_Icon_v1_256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ClipReviewer_Icon_v1_512 {
+            get {
+                object obj = ResourceManager.GetObject("ClipReviewer_Icon_v1_512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
