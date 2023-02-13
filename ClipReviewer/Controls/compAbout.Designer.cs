@@ -89,13 +89,13 @@
             // logoPictureBox
             // 
             this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logoPictureBox.Image = global::ClipReviewer.Properties.Resources.ClipReviewer_Icon_v1_128;
+            this.logoPictureBox.Image = global::ClipReviewer.Properties.Resources.ClipReviewer_Icon_v2_512;
             this.logoPictureBox.Location = new System.Drawing.Point(0, 0);
             this.logoPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.logoPictureBox.Name = "logoPictureBox";
             this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 5);
             this.logoPictureBox.Size = new System.Drawing.Size(128, 129);
-            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.logoPictureBox.TabIndex = 12;
             this.logoPictureBox.TabStop = false;
             // 

@@ -46,6 +46,7 @@
             this.bBoxClipReview = new System.Windows.Forms.GroupBox();
             this.pThumbnailGenerator = new System.Windows.Forms.Panel();
             this.gBoxThumbnailGenerator = new System.Windows.Forms.GroupBox();
+            this.btnThumbGenClearCached = new System.Windows.Forms.Button();
             this.cBoxThumbGenUseCached = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBoxThumbGenTime = new System.Windows.Forms.TextBox();
@@ -63,7 +64,6 @@
             this.btnSaveChanges = new System.Windows.Forms.Button();
             this.tt = new System.Windows.Forms.ToolTip(this.components);
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnThumbGenClearCached = new System.Windows.Forms.Button();
             this.tableLayoutMain.SuspendLayout();
             this.pSearch.SuspendLayout();
             this.tabControler.SuspendLayout();
@@ -255,6 +255,16 @@
             this.gBoxThumbnailGenerator.TabIndex = 3;
             this.gBoxThumbnailGenerator.TabStop = false;
             // 
+            // btnThumbGenClearCached
+            // 
+            this.btnThumbGenClearCached.Location = new System.Drawing.Point(166, 76);
+            this.btnThumbGenClearCached.Name = "btnThumbGenClearCached";
+            this.btnThumbGenClearCached.Size = new System.Drawing.Size(152, 23);
+            this.btnThumbGenClearCached.TabIndex = 5;
+            this.btnThumbGenClearCached.Text = "Clear Cached Thumbnails";
+            this.btnThumbGenClearCached.UseVisualStyleBackColor = true;
+            this.btnThumbGenClearCached.Click += new System.EventHandler(this.btnThumbGenClearCached_Click);
+            // 
             // cBoxThumbGenUseCached
             // 
             this.cBoxThumbGenUseCached.AutoSize = true;
@@ -427,16 +437,6 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // btnThumbGenClearCached
-            // 
-            this.btnThumbGenClearCached.Location = new System.Drawing.Point(166, 76);
-            this.btnThumbGenClearCached.Name = "btnThumbGenClearCached";
-            this.btnThumbGenClearCached.Size = new System.Drawing.Size(152, 23);
-            this.btnThumbGenClearCached.TabIndex = 5;
-            this.btnThumbGenClearCached.Text = "Clear Cached Thumbnails";
-            this.btnThumbGenClearCached.UseVisualStyleBackColor = true;
-            this.btnThumbGenClearCached.Click += new System.EventHandler(this.btnThumbGenClearCached_Click);
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -447,9 +447,10 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(720, 500);
             this.Name = "frmSettings";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "frmSettings";
+            this.Text = "Settings";
             this.tableLayoutMain.ResumeLayout(false);
             this.pSearch.ResumeLayout(false);
             this.pSearch.PerformLayout();

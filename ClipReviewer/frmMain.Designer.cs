@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btnStartReview = new System.Windows.Forms.Button();
             this.compClipsCategories1 = new ClipReviewer.compClipsCategories();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -202,6 +203,7 @@
             this.ClientSize = new System.Drawing.Size(760, 426);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(720, 400);
             this.Name = "frmMain";
