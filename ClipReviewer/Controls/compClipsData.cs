@@ -82,6 +82,7 @@ namespace ClipReviewer.Controls
         {
             Clips = new List<Clip>();
             progressBar1.Value = 0;
+            this.Enabled = false;
 
             // populate
             IEnumerable<FileInfo> fileEntries = GetClipFiles(folderPath);
@@ -89,6 +90,15 @@ namespace ClipReviewer.Controls
 
 
             if (slowMethod)
+            {
+                uint i = 0;
+                foreach (var f in fileEntries)
+                {
+                    Clips.Add(await Clip.New(f.FullName, id: i++));
+                    progressBar1.Increment(1);
+                }
+            }
+            else
             {
                 var clips = await ParallelAsync.ForEachAsync(fileEntries, (f) =>
                 {
@@ -100,21 +110,14 @@ namespace ClipReviewer.Controls
                 {
                     c.ID = i++;
                     Clips.Add(c);
-                }
-            }
-            else
-            {
-                uint i = 0;
-                foreach (var f in fileEntries)
-                {
-                    Clips.Add(await Clip.New(f.FullName, id: i++));
-                    progressBar1.Increment(1);
+                    progressBar1.Increment(1); // TODO: somehow make progress bar work in parallelasync
                 }
             }
 
             Console.WriteLine("All Clips added!");
             dataGridView1.DataSource = Clips;
             dataGridView1.AutoResizeColumns();
+            this.Enabled = true;
             return Clips;
         }
 
@@ -136,17 +139,11 @@ namespace ClipReviewer.Controls
                 "(Progress bar below data grid works only in slow load!)\r\n\r\n" +
                 "Do you want to proceed with slow load? (low CPU usage)");
             if (result == DialogResult.Yes)
-            {
                 slow = true;
-            }
             else if (result == DialogResult.No)
-            {
-                slow = true;
-            }
-            else
-            {
-                return;
-            }
+                slow = false;
+            else return;
+
             await LoadClips(txtBoxClipsFolderLocation.Text, slow);
             RefreshUI(null, null);
         }

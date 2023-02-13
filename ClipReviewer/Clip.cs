@@ -1,4 +1,5 @@
-﻿using ClipReviewer.Utils;
+﻿using ClipReviewer.Properties;
+using ClipReviewer.Utils;
 using Force.Crc32;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace ClipReviewer
 {
     public class Clip
     {
+        public static string THUMBNAIL_PATH = Path.Combine(Path.GetTempPath(), "ClipReviewer_Thumbnails");
+
         public uint ID { get; set; }
         public string FileName => Path.GetFileName(FullFilePath);
         public DateTime CreatedDate => File.GetCreationTime(FullFilePath);
@@ -22,40 +25,54 @@ namespace ClipReviewer
         public string FullFilePath { get; }
         public string ThumbnailPath { get; private set; }
 
-        public static async Task<Clip> New(string fullFilePath, uint id = 0, string category = "", string description = "")
+        public static async Task<Clip> New(string fullFilePath, 
+            uint id = 0, string category = "", string description = "")
         {
-            //string output = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".png");
-            string thumbnailPath = Path.Combine(Path.GetTempPath(), "ClipReviewer_Thumbnails", Path.GetFileNameWithoutExtension(fullFilePath) + ".png");
+            // --- hash ---
             // TODO: faster hash or something similar
             //var hash = GetCRC32C(fullFilePath);
             //string thumbnailPath = Path.Combine(Path.GetTempPath(), hash + ".png");
 
-            TimeSpan videoDuration = TimeSpan.Zero;
-
-            var snapAt = TimeSpan.FromSeconds(19); // TODO: grab from setting
+            // --- video duration ---
             IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(fullFilePath);
-            videoDuration = mediaInfo.VideoStreams.First().Duration;
+            TimeSpan videoDuration = mediaInfo.VideoStreams.First().Duration;
 
-            if (!File.Exists(thumbnailPath))
+            // --- Thumbnail Generator ---
+            string thumbnailPath = "";
+            if (Settings.Default.ThumbGenEnabled)
             {
-                try
+                //string output = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".png");
+                thumbnailPath = Path.Combine(THUMBNAIL_PATH, Path.GetFileNameWithoutExtension(fullFilePath) + ".jpg");
+                
+                var snapAt = TimeSpan.FromMilliseconds(Settings.Default.ThumbGenTime.ParseCustomTime(videoDuration.Milliseconds));
+
+                if (File.Exists(thumbnailPath) && !Settings.Default.ThumbGenUseCached)
+                    File.Delete(thumbnailPath);
+
+                if (!File.Exists(thumbnailPath))
                 {
-                    if (snapAt > videoDuration)
+                    try
                     {
-                        snapAt = videoDuration / 2;
-                        MsgBox.Warning(
-                            $"\"{Path.GetFileName(fullFilePath)}\" was shorter than SnapTo value!\r\n" +
-                            $"Consider setting percentage instead of absolute values in the settings.\r\n\r\n" +
-                            $"(You can disable this warning in the settings)", buttons: MessageBoxButtons.OK);
+                        if (snapAt > videoDuration)
+                        {
+                            snapAt = videoDuration / 2;
+                            if (!Settings.Default.ThumbGenIgnoreWarning)
+                                MsgBox.Warning(
+                                    $"\"{Path.GetFileName(fullFilePath)}\" was shorter than SnapTo value!\r\n" +
+                                    $"Consider setting percentage instead of absolute values in the settings.\r\n\r\n" +
+                                    $"(You can disable this warning in the settings)", buttons: MessageBoxButtons.OK);
+                        }
+                        IConversion conversion = await FFmpeg.Conversions.FromSnippet.Snapshot(fullFilePath, thumbnailPath, snapAt);
+                        IConversionResult result = await conversion.Start();
                     }
-                    IConversion conversion = await FFmpeg.Conversions.FromSnippet.Snapshot(fullFilePath, thumbnailPath, snapAt);
-                    IConversionResult result = await conversion.Start();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
             }
+
+            // --- create instance ---
             return new Clip(id, fullFilePath, videoDuration, category, description, thumbnailPath);
         }
         

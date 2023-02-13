@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ClipReviewer.Utils
@@ -15,6 +17,18 @@ namespace ClipReviewer.Utils
                 throw new ArgumentNullException("extensions");
             IEnumerable<FileInfo> files = dir.EnumerateFiles();
             return files.Where(f => extensions.Contains(f.Extension));
+        }
+
+        public static int ParseCustomTime(this string time, int currentTime)
+        {
+            if (!Regex.IsMatch(time, @"^\d+(\.\d+)?%?$"))
+                throw new ArgumentException($"Time isn't valid! time: \"{time}\"");
+            if (time[time.Length - 1] == '%')
+            {
+                float parsedTime = int.Parse(time.Remove(time.Length - 1));
+                return (int)((parsedTime / 100) * currentTime);
+            }
+            else return int.Parse(time);
         }
     }
 }

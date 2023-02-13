@@ -46,10 +46,11 @@
             this.bBoxClipReview = new System.Windows.Forms.GroupBox();
             this.pThumbnailGenerator = new System.Windows.Forms.Panel();
             this.gBoxThumbnailGenerator = new System.Windows.Forms.GroupBox();
+            this.cBoxThumbGenUseCached = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtBoxThumbnailGeneratorTime = new System.Windows.Forms.TextBox();
-            this.cBoxIgnoreThumbnailWarning = new System.Windows.Forms.CheckBox();
-            this.cBoxThumbnailGenerator = new System.Windows.Forms.CheckBox();
+            this.txtBoxThumbGenTime = new System.Windows.Forms.TextBox();
+            this.cBoxThumbGenIgnoreWarning = new System.Windows.Forms.CheckBox();
+            this.cBoxThumbnailGeneratorEnabled = new System.Windows.Forms.CheckBox();
             this.pAutoSeek = new System.Windows.Forms.Panel();
             this.gBoxAutoSeek = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -61,6 +62,8 @@
             this.btnDiscardChanges = new System.Windows.Forms.Button();
             this.btnSaveChanges = new System.Windows.Forms.Button();
             this.tt = new System.Windows.Forms.ToolTip(this.components);
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnThumbGenClearCached = new System.Windows.Forms.Button();
             this.tableLayoutMain.SuspendLayout();
             this.pSearch.SuspendLayout();
             this.tabControler.SuspendLayout();
@@ -75,6 +78,7 @@
             this.gBoxAutoSeek.SuspendLayout();
             this.tabMisc.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutMain
@@ -238,16 +242,28 @@
             // 
             // gBoxThumbnailGenerator
             // 
+            this.gBoxThumbnailGenerator.Controls.Add(this.btnThumbGenClearCached);
+            this.gBoxThumbnailGenerator.Controls.Add(this.cBoxThumbGenUseCached);
             this.gBoxThumbnailGenerator.Controls.Add(this.label2);
-            this.gBoxThumbnailGenerator.Controls.Add(this.txtBoxThumbnailGeneratorTime);
-            this.gBoxThumbnailGenerator.Controls.Add(this.cBoxIgnoreThumbnailWarning);
-            this.gBoxThumbnailGenerator.Controls.Add(this.cBoxThumbnailGenerator);
+            this.gBoxThumbnailGenerator.Controls.Add(this.txtBoxThumbGenTime);
+            this.gBoxThumbnailGenerator.Controls.Add(this.cBoxThumbGenIgnoreWarning);
+            this.gBoxThumbnailGenerator.Controls.Add(this.cBoxThumbnailGeneratorEnabled);
             this.gBoxThumbnailGenerator.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gBoxThumbnailGenerator.Location = new System.Drawing.Point(0, 0);
             this.gBoxThumbnailGenerator.Name = "gBoxThumbnailGenerator";
             this.gBoxThumbnailGenerator.Size = new System.Drawing.Size(405, 115);
             this.gBoxThumbnailGenerator.TabIndex = 3;
             this.gBoxThumbnailGenerator.TabStop = false;
+            // 
+            // cBoxThumbGenUseCached
+            // 
+            this.cBoxThumbGenUseCached.AutoSize = true;
+            this.cBoxThumbGenUseCached.Location = new System.Drawing.Point(11, 79);
+            this.cBoxThumbGenUseCached.Name = "cBoxThumbGenUseCached";
+            this.cBoxThumbGenUseCached.Size = new System.Drawing.Size(149, 19);
+            this.cBoxThumbGenUseCached.TabIndex = 4;
+            this.cBoxThumbGenUseCached.Text = "Use cached thumbnails";
+            this.cBoxThumbGenUseCached.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -258,36 +274,37 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Snap at:";
             // 
-            // txtBoxThumbnailGeneratorTime
+            // txtBoxThumbGenTime
             // 
-            this.txtBoxThumbnailGeneratorTime.Location = new System.Drawing.Point(65, 25);
-            this.txtBoxThumbnailGeneratorTime.Name = "txtBoxThumbnailGeneratorTime";
-            this.txtBoxThumbnailGeneratorTime.Size = new System.Drawing.Size(189, 23);
-            this.txtBoxThumbnailGeneratorTime.TabIndex = 3;
-            this.txtBoxThumbnailGeneratorTime.MouseEnter += new System.EventHandler(this.txtBoxThumbnailGeneratorTime_MouseEnter);
-            this.txtBoxThumbnailGeneratorTime.MouseLeave += new System.EventHandler(this.HideTT);
+            this.txtBoxThumbGenTime.Location = new System.Drawing.Point(65, 25);
+            this.txtBoxThumbGenTime.Name = "txtBoxThumbGenTime";
+            this.txtBoxThumbGenTime.Size = new System.Drawing.Size(189, 23);
+            this.txtBoxThumbGenTime.TabIndex = 3;
+            this.txtBoxThumbGenTime.MouseEnter += new System.EventHandler(this.txtBoxThumbnailGeneratorTime_MouseEnter);
+            this.txtBoxThumbGenTime.MouseLeave += new System.EventHandler(this.HideTT);
+            this.txtBoxThumbGenTime.Validating += new System.ComponentModel.CancelEventHandler(this.txtBoxThumbnailGeneratorTime_Validating);
             // 
-            // cBoxIgnoreThumbnailWarning
+            // cBoxThumbGenIgnoreWarning
             // 
-            this.cBoxIgnoreThumbnailWarning.AutoSize = true;
-            this.cBoxIgnoreThumbnailWarning.Location = new System.Drawing.Point(11, 54);
-            this.cBoxIgnoreThumbnailWarning.Name = "cBoxIgnoreThumbnailWarning";
-            this.cBoxIgnoreThumbnailWarning.Size = new System.Drawing.Size(291, 19);
-            this.cBoxIgnoreThumbnailWarning.TabIndex = 3;
-            this.cBoxIgnoreThumbnailWarning.Text = "Ignore warning if value is higher then video length";
-            this.cBoxIgnoreThumbnailWarning.UseVisualStyleBackColor = true;
+            this.cBoxThumbGenIgnoreWarning.AutoSize = true;
+            this.cBoxThumbGenIgnoreWarning.Location = new System.Drawing.Point(11, 54);
+            this.cBoxThumbGenIgnoreWarning.Name = "cBoxThumbGenIgnoreWarning";
+            this.cBoxThumbGenIgnoreWarning.Size = new System.Drawing.Size(291, 19);
+            this.cBoxThumbGenIgnoreWarning.TabIndex = 3;
+            this.cBoxThumbGenIgnoreWarning.Text = "Ignore warning if value is higher then video length";
+            this.cBoxThumbGenIgnoreWarning.UseVisualStyleBackColor = true;
             // 
-            // cBoxThumbnailGenerator
+            // cBoxThumbnailGeneratorEnabled
             // 
-            this.cBoxThumbnailGenerator.AutoSize = true;
-            this.cBoxThumbnailGenerator.BackColor = System.Drawing.SystemColors.Control;
-            this.cBoxThumbnailGenerator.Location = new System.Drawing.Point(6, 0);
-            this.cBoxThumbnailGenerator.Name = "cBoxThumbnailGenerator";
-            this.cBoxThumbnailGenerator.Size = new System.Drawing.Size(138, 19);
-            this.cBoxThumbnailGenerator.TabIndex = 0;
-            this.cBoxThumbnailGenerator.Text = "Thumbnail Generator";
-            this.cBoxThumbnailGenerator.UseVisualStyleBackColor = false;
-            this.cBoxThumbnailGenerator.CheckedChanged += new System.EventHandler(this.RefreshUI);
+            this.cBoxThumbnailGeneratorEnabled.AutoSize = true;
+            this.cBoxThumbnailGeneratorEnabled.BackColor = System.Drawing.SystemColors.Control;
+            this.cBoxThumbnailGeneratorEnabled.Location = new System.Drawing.Point(6, 0);
+            this.cBoxThumbnailGeneratorEnabled.Name = "cBoxThumbnailGeneratorEnabled";
+            this.cBoxThumbnailGeneratorEnabled.Size = new System.Drawing.Size(138, 19);
+            this.cBoxThumbnailGeneratorEnabled.TabIndex = 0;
+            this.cBoxThumbnailGeneratorEnabled.Text = "Thumbnail Generator";
+            this.cBoxThumbnailGeneratorEnabled.UseVisualStyleBackColor = false;
+            this.cBoxThumbnailGeneratorEnabled.CheckedChanged += new System.EventHandler(this.RefreshUI);
             // 
             // pAutoSeek
             // 
@@ -329,6 +346,7 @@
             this.txtBoxAutoSeekTime.TabIndex = 1;
             this.txtBoxAutoSeekTime.MouseEnter += new System.EventHandler(this.txtBoxAutoSeekTime_MouseEnter);
             this.txtBoxAutoSeekTime.MouseLeave += new System.EventHandler(this.HideTT);
+            this.txtBoxAutoSeekTime.Validating += new System.ComponentModel.CancelEventHandler(this.txtBoxAutoSeekTime_Validating);
             // 
             // cBoxAutoSeekEnabled
             // 
@@ -376,12 +394,12 @@
             // 
             // btnDiscardChanges
             // 
-            this.btnDiscardChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDiscardChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDiscardChanges.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnDiscardChanges.FlatAppearance.BorderSize = 0;
             this.btnDiscardChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDiscardChanges.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnDiscardChanges.Location = new System.Drawing.Point(-110, 3);
+            this.btnDiscardChanges.Location = new System.Drawing.Point(288, 3);
             this.btnDiscardChanges.Name = "btnDiscardChanges";
             this.btnDiscardChanges.Size = new System.Drawing.Size(62, 23);
             this.btnDiscardChanges.TabIndex = 1;
@@ -391,9 +409,9 @@
             // 
             // btnSaveChanges
             // 
-            this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveChanges.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSaveChanges.Location = new System.Drawing.Point(-42, 3);
+            this.btnSaveChanges.Location = new System.Drawing.Point(356, 3);
             this.btnSaveChanges.Name = "btnSaveChanges";
             this.btnSaveChanges.Size = new System.Drawing.Size(75, 23);
             this.btnSaveChanges.TabIndex = 0;
@@ -404,6 +422,20 @@
             // tt
             // 
             this.tt.AutomaticDelay = 1;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // btnThumbGenClearCached
+            // 
+            this.btnThumbGenClearCached.Location = new System.Drawing.Point(166, 76);
+            this.btnThumbGenClearCached.Name = "btnThumbGenClearCached";
+            this.btnThumbGenClearCached.Size = new System.Drawing.Size(152, 23);
+            this.btnThumbGenClearCached.TabIndex = 5;
+            this.btnThumbGenClearCached.Text = "Clear Cached Thumbnails";
+            this.btnThumbGenClearCached.UseVisualStyleBackColor = true;
+            this.btnThumbGenClearCached.Click += new System.EventHandler(this.btnThumbGenClearCached_Click);
             // 
             // frmSettings
             // 
@@ -436,6 +468,7 @@
             this.gBoxAutoSeek.PerformLayout();
             this.tabMisc.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -461,15 +494,18 @@
         private CheckBox cBoxAutoSeekEnabled;
         private Label label1;
         private TextBox txtBoxAutoSeekTime;
-        private CheckBox cBoxIgnoreThumbnailWarning;
+        private CheckBox cBoxThumbGenIgnoreWarning;
         private ToolTip tt;
         private Panel pAutoSeek;
         private Panel pThumbnailGenerator;
         private GroupBox gBoxThumbnailGenerator;
-        private CheckBox cBoxThumbnailGenerator;
+        private CheckBox cBoxThumbnailGeneratorEnabled;
         private Label label2;
-        private TextBox txtBoxThumbnailGeneratorTime;
+        private TextBox txtBoxThumbGenTime;
         private FlowLayoutPanel flowLayoutGeneral;
         private CheckBox cBoxTopMostWhileReviewing;
+        private ErrorProvider errorProvider1;
+        private CheckBox cBoxThumbGenUseCached;
+        private Button btnThumbGenClearCached;
     }
 }
