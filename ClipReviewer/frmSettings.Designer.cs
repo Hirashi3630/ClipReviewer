@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("General");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Clip Loader");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Clips");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Misc");
             this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
             this.pSearch = new System.Windows.Forms.Panel();
@@ -42,8 +42,8 @@
             this.gBoxGeneral = new System.Windows.Forms.GroupBox();
             this.flowLayoutGeneral = new System.Windows.Forms.FlowLayoutPanel();
             this.cBoxTopMostWhileReviewing = new System.Windows.Forms.CheckBox();
-            this.tabClipLoader = new System.Windows.Forms.TabPage();
-            this.bBoxClipReview = new System.Windows.Forms.GroupBox();
+            this.tabClips = new System.Windows.Forms.TabPage();
+            this.bBoxClips = new System.Windows.Forms.GroupBox();
             this.pThumbnailGenerator = new System.Windows.Forms.Panel();
             this.gBoxThumbnailGenerator = new System.Windows.Forms.GroupBox();
             this.btnThumbGenClearCached = new System.Windows.Forms.Button();
@@ -70,8 +70,8 @@
             this.tabGeneral.SuspendLayout();
             this.gBoxGeneral.SuspendLayout();
             this.flowLayoutGeneral.SuspendLayout();
-            this.tabClipLoader.SuspendLayout();
-            this.bBoxClipReview.SuspendLayout();
+            this.tabClips.SuspendLayout();
+            this.bBoxClips.SuspendLayout();
             this.pThumbnailGenerator.SuspendLayout();
             this.gBoxThumbnailGenerator.SuspendLayout();
             this.pAutoSeek.SuspendLayout();
@@ -140,8 +140,8 @@
             this.treeViewSearch.Name = "treeViewSearch";
             treeNode1.Name = "General";
             treeNode1.Text = "General";
-            treeNode2.Name = "ClipLoader";
-            treeNode2.Text = "Clip Loader";
+            treeNode2.Name = "Clips";
+            treeNode2.Text = "Clips";
             treeNode3.Name = "Misc";
             treeNode3.Text = "Misc";
             this.treeViewSearch.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
@@ -155,7 +155,7 @@
             // tabControler
             // 
             this.tabControler.Controls.Add(this.tabGeneral);
-            this.tabControler.Controls.Add(this.tabClipLoader);
+            this.tabControler.Controls.Add(this.tabClips);
             this.tabControler.Controls.Add(this.tabMisc);
             this.tabControler.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControler.Location = new System.Drawing.Point(273, 3);
@@ -191,6 +191,7 @@
             // 
             this.flowLayoutGeneral.Controls.Add(this.cBoxTopMostWhileReviewing);
             this.flowLayoutGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutGeneral.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutGeneral.Location = new System.Drawing.Point(3, 19);
             this.flowLayoutGeneral.Name = "flowLayoutGeneral";
             this.flowLayoutGeneral.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
@@ -207,28 +208,28 @@
             this.cBoxTopMostWhileReviewing.Text = "Keep application pinned at top while reviewing";
             this.cBoxTopMostWhileReviewing.UseVisualStyleBackColor = true;
             // 
-            // tabClipLoader
+            // tabClips
             // 
-            this.tabClipLoader.Controls.Add(this.bBoxClipReview);
-            this.tabClipLoader.Location = new System.Drawing.Point(4, 24);
-            this.tabClipLoader.Name = "tabClipLoader";
-            this.tabClipLoader.Padding = new System.Windows.Forms.Padding(3);
-            this.tabClipLoader.Size = new System.Drawing.Size(420, 398);
-            this.tabClipLoader.TabIndex = 2;
-            this.tabClipLoader.Text = "ClipLoader";
-            this.tabClipLoader.UseVisualStyleBackColor = true;
+            this.tabClips.Controls.Add(this.bBoxClips);
+            this.tabClips.Location = new System.Drawing.Point(4, 24);
+            this.tabClips.Name = "tabClips";
+            this.tabClips.Padding = new System.Windows.Forms.Padding(3);
+            this.tabClips.Size = new System.Drawing.Size(420, 398);
+            this.tabClips.TabIndex = 2;
+            this.tabClips.Text = "Clips";
+            this.tabClips.UseVisualStyleBackColor = true;
             // 
-            // bBoxClipReview
+            // bBoxClips
             // 
-            this.bBoxClipReview.Controls.Add(this.pThumbnailGenerator);
-            this.bBoxClipReview.Controls.Add(this.pAutoSeek);
-            this.bBoxClipReview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bBoxClipReview.Location = new System.Drawing.Point(3, 3);
-            this.bBoxClipReview.Name = "bBoxClipReview";
-            this.bBoxClipReview.Size = new System.Drawing.Size(414, 392);
-            this.bBoxClipReview.TabIndex = 0;
-            this.bBoxClipReview.TabStop = false;
-            this.bBoxClipReview.Text = "Clip Review";
+            this.bBoxClips.Controls.Add(this.pThumbnailGenerator);
+            this.bBoxClips.Controls.Add(this.pAutoSeek);
+            this.bBoxClips.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bBoxClips.Location = new System.Drawing.Point(3, 3);
+            this.bBoxClips.Name = "bBoxClips";
+            this.bBoxClips.Size = new System.Drawing.Size(414, 392);
+            this.bBoxClips.TabIndex = 0;
+            this.bBoxClips.TabStop = false;
+            this.bBoxClips.Text = "Clips";
             // 
             // pThumbnailGenerator
             // 
@@ -459,8 +460,8 @@
             this.gBoxGeneral.ResumeLayout(false);
             this.flowLayoutGeneral.ResumeLayout(false);
             this.flowLayoutGeneral.PerformLayout();
-            this.tabClipLoader.ResumeLayout(false);
-            this.bBoxClipReview.ResumeLayout(false);
+            this.tabClips.ResumeLayout(false);
+            this.bBoxClips.ResumeLayout(false);
             this.pThumbnailGenerator.ResumeLayout(false);
             this.gBoxThumbnailGenerator.ResumeLayout(false);
             this.gBoxThumbnailGenerator.PerformLayout();
@@ -489,8 +490,8 @@
         private Panel panel1;
         private Button btnDiscardChanges;
         private Button btnSaveChanges;
-        private TabPage tabClipLoader;
-        private GroupBox bBoxClipReview;
+        private TabPage tabClips;
+        private GroupBox bBoxClips;
         private GroupBox gBoxAutoSeek;
         private CheckBox cBoxAutoSeekEnabled;
         private Label label1;

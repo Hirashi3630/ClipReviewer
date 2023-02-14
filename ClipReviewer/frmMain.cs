@@ -1,6 +1,7 @@
 ﻿using ClipReviewer.Controls;
 using ClipReviewer.Properties;
 using ClipReviewer.Utils;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,24 +16,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Xabe.FFmpeg;
 using Xabe.FFmpeg.Downloader;
+using static System.Windows.Forms.AxHost;
 
 namespace ClipReviewer
 {
     public partial class frmMain : Form
     {
-        private bool m_ReviewInProgress = false;
-        public bool ReviewInProgress
-        {
-            get => m_ReviewInProgress;
-            set
-            {
-                m_ReviewInProgress = value;
-
-                btnStartReview.Text = $"{(value ? "Stop" : "Start")} &Reviewing";
-                compClipsCategories1.ReviewInProgress = value;
-                compClipsData1.ReviewInProgress = value;
-            }
-        }
+        public static Reviewer MainReviewer { get; set; } = new Reviewer(new List<Clip>());
 
         public frmMain()
         {
@@ -41,6 +31,37 @@ namespace ClipReviewer
 #if DEBUG
             this.Text += " DEBUG";
 #endif
+            RefreshUI(null, null);
+            MainReviewer.OnReviewStateChanged += (state) => RefreshUI(null, null);
+        }
+
+        private void RefreshUI(object sender, EventArgs e)
+        {
+            // refresh lblState
+            lblCurrentState.Text = "Current State: " + MainReviewer.State.ToString();
+
+            // refresh btnStart
+            switch (MainReviewer.State)
+            {
+                case ReviewerState.Stopped:
+                    btnStartReview.Text = "Start";
+                    btnPauseReview.Enabled = false;
+                    break;
+                case ReviewerState.Reviewing:
+                    btnStartReview.Text = "Stop";
+                    btnPauseReview.Text = "Pause";
+                    btnPauseReview.Enabled = true;
+                    break;
+                case ReviewerState.Paused:
+                    btnStartReview.Text = "Stop";
+                    btnPauseReview.Text = "Continue";
+                    btnPauseReview.Enabled = true;
+                    break;
+                case ReviewerState.Unknown:
+                default:
+                    Console.WriteLine("ReviwerState is unknown!");
+                    break;
+            }
         }
 
         private void frmMain_Click(object sender, EventArgs e)
@@ -50,13 +71,35 @@ namespace ClipReviewer
 
         private void btnStartReview_Click(object sender, EventArgs e)
         {
-            if (compClipsData1.Clips == null || compClipsData1.Clips.Count <= 0)
+            if (MainReviewer.Clips == null || MainReviewer.Clips.Count <= 0)
             {
                 MsgBox.Error("You can not start reviewing without loading clips!");
                 return;
             }
-            compClipsData1.LockedSelection = 0;
-            ReviewInProgress = !ReviewInProgress;
+
+            if (MainReviewer.State == ReviewerState.Stopped)
+            {
+                // Its stopped -> run it
+                MainReviewer.State = ReviewerState.Reviewing;
+                MainReviewer.Select(0);
+            }
+            else // Its running/paused -> stop it (reset it)
+                MainReviewer.State = ReviewerState.Stopped;
+        }
+
+        private void btnPauseReview_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Pausing...");
+            Console.WriteLine(MainReviewer.State);
+            if (MainReviewer.State == ReviewerState.Reviewing) // Its paused -> continue
+                MainReviewer.State = ReviewerState.Paused;
+            else if (MainReviewer.State == ReviewerState.Paused) // Its running -> pause it
+                MainReviewer.State = ReviewerState.Reviewing;
+        }
+
+        private void btnCommitReview_Click(object sender, EventArgs e)
+        {
+
         }
 
         #region Menu
@@ -89,6 +132,7 @@ namespace ClipReviewer
                 a.ShowDialog();
         }
         #endregion
+
         #endregion
 
     }

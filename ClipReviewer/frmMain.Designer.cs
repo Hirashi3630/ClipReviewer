@@ -44,6 +44,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCommitReview = new System.Windows.Forms.Button();
             this.btnPauseReview = new System.Windows.Forms.Button();
+            this.lblCurrentState = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -66,7 +67,6 @@
             this.compClipsCategories1.Location = new System.Drawing.Point(3, 10);
             this.compClipsCategories1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.compClipsCategories1.Name = "compClipsCategories1";
-            this.compClipsCategories1.ReviewInProgress = false;
             this.compClipsCategories1.Size = new System.Drawing.Size(294, 333);
             this.compClipsCategories1.TabIndex = 0;
             // 
@@ -136,13 +136,10 @@
             // 
             // compClipsData1
             // 
-            this.compClipsData1.Clips = null;
             this.compClipsData1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compClipsData1.Location = new System.Drawing.Point(303, 10);
-            this.compClipsData1.LockedSelection = -1;
             this.compClipsData1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.compClipsData1.Name = "compClipsData1";
-            this.compClipsData1.ReviewInProgress = false;
             this.compClipsData1.Size = new System.Drawing.Size(454, 333);
             this.compClipsData1.TabIndex = 0;
             // 
@@ -169,6 +166,7 @@
             this.panel1.Controls.Add(this.btnCommitReview);
             this.panel1.Controls.Add(this.btnPauseReview);
             this.panel1.Controls.Add(this.btnStartReview);
+            this.panel1.Controls.Add(this.lblCurrentState);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(300, 353);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
@@ -185,6 +183,7 @@
             this.btnCommitReview.TabIndex = 8;
             this.btnCommitReview.Text = "Commit";
             this.btnCommitReview.UseVisualStyleBackColor = true;
+            this.btnCommitReview.Click += new System.EventHandler(this.btnCommitReview_Click);
             // 
             // btnPauseReview
             // 
@@ -195,6 +194,18 @@
             this.btnPauseReview.TabIndex = 0;
             this.btnPauseReview.Text = "Pause";
             this.btnPauseReview.UseVisualStyleBackColor = true;
+            this.btnPauseReview.Click += new System.EventHandler(this.btnPauseReview_Click);
+            // 
+            // lblCurrentState
+            // 
+            this.lblCurrentState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCurrentState.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblCurrentState.Location = new System.Drawing.Point(265, 0);
+            this.lblCurrentState.Name = "lblCurrentState";
+            this.lblCurrentState.Size = new System.Drawing.Size(192, 12);
+            this.lblCurrentState.TabIndex = 9;
+            this.lblCurrentState.Text = "Current State: Unknown";
+            this.lblCurrentState.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // frmMain
             // 
@@ -234,5 +245,6 @@
         private Panel panel1;
         private Button btnPauseReview;
         private Button btnCommitReview;
+        private Label lblCurrentState;
     }
 }

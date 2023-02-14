@@ -5,46 +5,23 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Linq.Dynamic;
 using System.Collections;
+using Newtonsoft.Json.Linq;
 
 namespace ClipReviewer.Controls
 {
     public partial class compClipsData : UserControl
     {
-        private bool m_ReviewInProgress = false;
-        public bool ReviewInProgress
-        {
-            get => m_ReviewInProgress;
-            set
-            {
-                m_ReviewInProgress = value;
-                
-                dataGridView1_SelectionChanged(null, null);
-            }
-        }
-
-        private int m_LockedSelection = -1;
-        public int LockedSelection
-        {
-            get => m_LockedSelection;
-            set
-            {
-                m_LockedSelection = value;
-                // TODO: focus on selected 
-                if (value >= 0 && value < dataGridView1.RowCount && ReviewInProgress)
-                    dataGridView1.Rows[value].Selected = true;
-            }
-        }
-
+        private Reviewer reviewer => frmMain.MainReviewer;
         public IEnumerable<FileInfo> GetClipFiles(string folderPath) => new DirectoryInfo(folderPath).GetFilesByExtensions(".mp4", ".avi", ".mkv");
         private static bool IsPathValid(string path)
             => new Regex("^(?:[a-zA-Z]:|\\\\\\\\[\\w\\.]+\\\\[\\w.$]+)\\\\(?:[\\w\\s]+\\\\)*[\\w\\s]+$").IsMatch(path);
-
-        public List<Clip> Clips { get; set; }
 
         public compClipsData()
         {
             InitializeComponent();
             RefreshUI(null, null);
+            reviewer.OnReviewStateChanged += (state) => dataGridView1_SelectionChanged(null, null);
+            reviewer.OnSelectedClipIndexChanged += (index) => dataGridView1.Rows[index].Selected = true;
         }
 
         private void RefreshUI(object sender, EventArgs e)
@@ -62,7 +39,7 @@ namespace ClipReviewer.Controls
                 ? Color.White : Color.MistyRose;
             btnLoad.Enabled = isValid;
 
-            btnUnload.Enabled = Clips != null && Clips.Count > 0;
+            btnUnload.Enabled = reviewer.Clips != null && reviewer.Clips.Count > 0;
         }
 
         public void SortDataGridViewByProperty(string property, ref bool ascending)
@@ -71,16 +48,16 @@ namespace ClipReviewer.Controls
             if (prop != null)
             {
                 if (ascending)
-                    dataGridView1.DataSource = Clips.OrderBy(x => prop.GetValue(x, null)).ToList();
+                    dataGridView1.DataSource = reviewer.Clips.OrderBy(x => prop.GetValue(x, null)).ToList();
                 else
-                    dataGridView1.DataSource = Clips.OrderBy(x => prop.GetValue(x, null)).Reverse().ToList();
+                    dataGridView1.DataSource = reviewer.Clips.OrderBy(x => prop.GetValue(x, null)).Reverse().ToList();
                 ascending = !ascending;
             }
         }
 
         public async Task<List<Clip>> LoadClips(string folderPath, bool slowMethod = false)
         {
-            Clips = new List<Clip>();
+            var resultClips = new List<Clip>();
             progressBar1.Value = 0;
             this.Enabled = false;
 
@@ -94,7 +71,7 @@ namespace ClipReviewer.Controls
                 uint i = 0;
                 foreach (var f in fileEntries)
                 {
-                    Clips.Add(await Clip.New(f.FullName, id: i++));
+                    resultClips.Add(await Clip.New(f.FullName, id: i++));
                     progressBar1.Increment(1);
                 }
             }
@@ -109,33 +86,32 @@ namespace ClipReviewer.Controls
                 foreach (var c in clips)
                 {
                     c.ID = i++;
-                    Clips.Add(c);
+                    resultClips.Add(c);
                     progressBar1.Increment(1); // TODO: somehow make progress bar work in parallelasync
                 }
             }
 
             Console.WriteLine("All Clips added!");
-            dataGridView1.DataSource = Clips;
+            reviewer.Clips = resultClips;
+            dataGridView1.DataSource = reviewer.Clips;
             dataGridView1.AutoResizeColumns();
             this.Enabled = true;
-            return Clips;
+            return reviewer.Clips   ;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            // dataGridView1.CurrentCell?.RowIndex != LockedSelection
-            if (LockedSelection >= 0 && LockedSelection < dataGridView1.RowCount && ReviewInProgress)
-                dataGridView1.Rows[LockedSelection].Selected = true;
+            if (reviewer.SelectedClipIndex >= 0 && reviewer.SelectedClipIndex < dataGridView1.RowCount && reviewer.State == ReviewerState.Reviewing)
+                dataGridView1.Rows[reviewer.SelectedClipIndex].Selected = true;
         }
 
         private async void btnLoad_Click(object sender, EventArgs e)
         {
-            //// load clips to datagrid
-            //dataGridView1.
+            // load clips to datagrid
             bool slow = false;
             DialogResult result = MsgBox.Question(
                 "There is an issue with Antimalware Execution Service slowing down this process.\r\n\r\n" +
-                "(this applies mainly when creating thumbnails)\r\n" +
+                //"(this applies mainly when creating thumbnails)\r\n" +
                 "(Progress bar below data grid works only in slow load!)\r\n\r\n" +
                 "Do you want to proceed with slow load? (low CPU usage)");
             if (result == DialogResult.Yes)
@@ -151,7 +127,7 @@ namespace ClipReviewer.Controls
         private void btnUnload_Click(object sender, EventArgs e)
         {
             dataGridView1.DataSource = null;
-            Clips.Clear();
+            reviewer.Clips.Clear();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)

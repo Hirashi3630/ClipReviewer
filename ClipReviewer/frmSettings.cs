@@ -103,7 +103,7 @@ namespace ClipReviewer
 
         #endregion
 
-        #region TabClipLoader
+        #region TabClips
         private void txtBoxAutoSeekTime_Validating(object sender, System.ComponentModel.CancelEventArgs e)
             => errorProvider1.SetError(txtBoxAutoSeekTime, !txtBoxAutoSeekTime_IsValid() ? GENERIC_ERROR_MSG : "");
         private bool txtBoxAutoSeekTime_IsValid()
