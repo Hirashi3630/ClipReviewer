@@ -1,4 +1,5 @@
 ﻿using ClipReviewer.Controls;
+using ClipReviewer.MediaControllers;
 using ClipReviewer.Properties;
 using ClipReviewer.Utils;
 using Newtonsoft.Json.Linq;
@@ -22,10 +23,13 @@ namespace ClipReviewer
 {
     public partial class frmMain : Form
     {
-        public static Reviewer MainReviewer { get; set; } = new Reviewer(new List<Clip>());
+        public static Reviewer MainReviewer { get; set; }
 
         public frmMain()
         {
+            // TODO: add autodetect or/and add option to change it in settings
+            MainReviewer = new Reviewer(new List<Clip>(), new VLCController()); 
+
             InitializeComponent();
             this.Text = $"{compAbout.AssemblyTitle} • {compAbout.AssemblyVersion}";
 #if DEBUG

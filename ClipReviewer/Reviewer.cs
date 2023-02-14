@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClipReviewer.MediaControllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,14 +51,17 @@ namespace ClipReviewer
         public Action<ReviewerState> OnReviewStateChanged = delegate { };
         public Action<List<Clip>> OnClipsChanged = delegate { };
         public Action<int> OnSelectedClipIndexChanged = delegate { };
-        
-        public Reviewer(List<Clip> clips, ReviewerState state = ReviewerState.Stopped, int selectedClipIndex = -1)
-        {
-            State = state;
-            Clips = clips;
-            SelectedClipIndex = selectedClipIndex;
-        }
         #endregion
+
+        private MediaController controller;
+
+        public Reviewer(List<Clip> clips, MediaController controller, ReviewerState state = ReviewerState.Stopped, int selectedClipIndex = -1)
+        {
+            this.State = state;
+            this.Clips = clips;
+            this.SelectedClipIndex = selectedClipIndex;
+            this.controller = controller;
+        }
 
         public bool SelectNext() => Select(SelectedClipIndex + 1);
         public bool Select(int index)
