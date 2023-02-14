@@ -64,6 +64,13 @@ namespace ClipReviewer
             }
         }
 
+        private void compClipsCategories1_Load(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+        }
+
         private void frmMain_Click(object sender, EventArgs e)
         {
             compClipsCategories1.Unselect();
@@ -134,6 +141,5 @@ namespace ClipReviewer
         #endregion
 
         #endregion
-
     }
 }

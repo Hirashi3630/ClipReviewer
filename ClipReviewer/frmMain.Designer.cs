@@ -69,6 +69,7 @@
             this.compClipsCategories1.Name = "compClipsCategories1";
             this.compClipsCategories1.Size = new System.Drawing.Size(294, 333);
             this.compClipsCategories1.TabIndex = 0;
+            this.compClipsCategories1.Load += new System.EventHandler(this.compClipsCategories1_Load);
             // 
             // menuStrip1
             // 

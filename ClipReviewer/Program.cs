@@ -25,8 +25,14 @@ namespace ClipReviewer
             if (!File.Exists(Path.Combine(ffmpegDir, "ffmpeg.exe")))
             {
                 Console.WriteLine("Downloading FFmpeg, please wait...");
+                if (MsgBox.Info(
+                    "The application needs to download FFmpeg (~75MB)\r\n" +
+                    "Application will start automatically as soon as it finishes!",
+                    buttons: MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                    Environment.Exit(-1);
                 await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Full, ffmpegDir, null);
                 Console.WriteLine("FFmpeg downloaded!");
+                MsgBox.Info("FFmpeg was downloaded successfully!");
             }
 
             if (!File.Exists(Path.Combine(ffmpegDir, "ffmpeg.exe")) ||
@@ -70,6 +76,7 @@ namespace ClipReviewer
                 Console.WriteLine(ex.Message);
                 Console.WriteLine("Application will exit, waiting for any key press...");
                 Console.ReadKey();
+                MsgBox.Error("Error occured!\r\n" + ex.Message);
                 return;
             }
 
