@@ -220,6 +220,7 @@
             this.MinimumSize = new System.Drawing.Size(720, 400);
             this.Name = "frmMain";
             this.Text = "frmMain";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Click += new System.EventHandler(this.frmMain_Click);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

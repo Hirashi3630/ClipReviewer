@@ -21,31 +21,28 @@ namespace ClipReviewer.MediaControllers
                     vlcPath = vlcKey.GetValue(null) as string;
             }
 
-            if (vlcPath == null)
+            if (vlcPath == null || !File.Exists(vlcPath))
                 throw new ApplicationException("Can not find the VLC executable!");
 
             var info = new ProcessStartInfo(vlcPath, "-I rc --rc-host=localhost:9876");
-            vlcProcess = Process.Start(info);
-            client = new TcpClient("localhost", 9876);
+            controllerProcess = Process.Start(info);
+            controllerTcpClient = new TcpClient("localhost", 9876);
         }
 
         #region Overrides
-        public override Process? PlaybackProcess
+        public override Process? GetProcess()
         {
-            get
+            var currentProcessId = Process.GetCurrentProcess().Id;
+            Process? vlcProcess = null;
+            foreach (var process in Process.GetProcessesByName("vlc"))
             {
-                var currentProcessId = Process.GetCurrentProcess().Id;
-                Process? vlcProcess = null;
-                foreach (var process in Process.GetProcessesByName("vlc"))
+                if (GetParentProcessId(process.Id) == currentProcessId)
                 {
-                    if (GetParentProcessId(process.Id) == currentProcessId)
-                    {
-                        vlcProcess = process;
-                        break;
-                    }
+                    vlcProcess = process;
+                    break;
                 }
-                return vlcProcess;
             }
+            return vlcProcess;
         }
 
         public override bool IsPlaying
@@ -109,8 +106,6 @@ namespace ClipReviewer.MediaControllers
 
         static ASCIIEncoding ASCIIEncoding = new ASCIIEncoding();
 
-        private Process? vlcProcess;
-        private TcpClient client;
 
         static int GetParentProcessId(int Id)
         {
@@ -139,8 +134,8 @@ namespace ClipReviewer.MediaControllers
             packet += Environment.NewLine;
 
             var buffer = ASCIIEncoding.GetBytes(packet);
-            client.GetStream().Write(buffer, 0, buffer.Length);
-            client.GetStream().Flush();
+            controllerTcpClient.GetStream().Write(buffer, 0, buffer.Length);
+            controllerTcpClient.GetStream().Flush();
 
             Trace.Write(packet);
         }
@@ -148,9 +143,9 @@ namespace ClipReviewer.MediaControllers
         public string ReadTillEnd()
         {
             StringBuilder sb = new StringBuilder();
-            while (client.GetStream().DataAvailable)
+            while (controllerTcpClient.GetStream().DataAvailable)
             {
-                int b = client.GetStream().ReadByte();
+                int b = controllerTcpClient.GetStream().ReadByte();
                 if (b >= 0)
                     sb.Append((char)b);
                 else

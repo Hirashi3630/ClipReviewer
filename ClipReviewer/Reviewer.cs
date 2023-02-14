@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClipReviewer
 {
-    public class Reviewer
+    public class Reviewer : IDisposable
     {
         #region Properties
         public ReviewerState State
@@ -18,7 +18,7 @@ namespace ClipReviewer
                 var old = m_State;
                 m_State = value;
                 if (OnReviewStateChanged != null && old != value)
-                    OnReviewStateChanged.Invoke(value);
+                    OnReviewStateChanged.Invoke(old, value);
             }
         }
         public List<Clip> Clips
@@ -29,7 +29,7 @@ namespace ClipReviewer
                 var old = m_Clips;
                 m_Clips = value;
                 if (OnClipsChanged != null && old != value)
-                    OnClipsChanged.Invoke(value);
+                    OnClipsChanged.Invoke(old, value);
             }
         }
         public int SelectedClipIndex
@@ -40,7 +40,7 @@ namespace ClipReviewer
                 var old = m_SelectedClipIndex;
                 m_SelectedClipIndex = value;
                 if (OnSelectedClipIndexChanged != null && old != value)
-                    OnSelectedClipIndexChanged.Invoke(value);
+                    OnSelectedClipIndexChanged.Invoke(old, value);
             }
         }
 
@@ -48,9 +48,9 @@ namespace ClipReviewer
         public List<Clip> m_Clips = new List<Clip>();
         private int m_SelectedClipIndex;
         
-        public Action<ReviewerState> OnReviewStateChanged = delegate { };
-        public Action<List<Clip>> OnClipsChanged = delegate { };
-        public Action<int> OnSelectedClipIndexChanged = delegate { };
+        public Action<ReviewerState, ReviewerState> OnReviewStateChanged = delegate { };
+        public Action<List<Clip>, List<Clip>> OnClipsChanged = delegate { };
+        public Action<int, int> OnSelectedClipIndexChanged = delegate { };
         #endregion
 
         private MediaController controller;
@@ -61,6 +61,14 @@ namespace ClipReviewer
             this.Clips = clips;
             this.SelectedClipIndex = selectedClipIndex;
             this.controller = controller;
+            OnReviewStateChanged += HandleStateChanged;
+            OnClipsChanged += HandleClipsChanged;
+            OnSelectedClipIndexChanged += HandleSelectedIndexChanged;
+        }
+
+        public void Dispose()
+        {
+            if (controller != null) controller.Dispose();
         }
 
         public bool SelectNext() => Select(SelectedClipIndex + 1);
@@ -74,6 +82,22 @@ namespace ClipReviewer
             SelectedClipIndex = index;
             return true;
         }
+
+        private void HandleStateChanged(ReviewerState oldState, ReviewerState newState)
+        {
+
+        }
+        private void HandleClipsChanged(List<Clip> oldClips, List<Clip> newClips)
+        {
+
+        }
+
+        private void HandleSelectedIndexChanged(int oldIndex, int newIndex)
+        {
+
+        }
+
+        
     }
 
     public enum ReviewerState

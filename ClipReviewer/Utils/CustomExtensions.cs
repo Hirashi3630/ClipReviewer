@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -29,6 +30,22 @@ namespace ClipReviewer.Utils
                 return (int)((parsedTime / 100) * currentTime);
             }
             else return int.Parse(time);
+        }
+
+        public static bool IsRunning(this Process process)
+        {
+            if (process == null)
+                return false;
+
+            try
+            {
+                Process.GetProcessById(process.Id);
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

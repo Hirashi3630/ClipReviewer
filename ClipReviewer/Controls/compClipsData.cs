@@ -20,8 +20,8 @@ namespace ClipReviewer.Controls
         {
             InitializeComponent();
             RefreshUI(null, null);
-            reviewer.OnReviewStateChanged += (state) => dataGridView1_SelectionChanged(null, null);
-            reviewer.OnSelectedClipIndexChanged += (index) => dataGridView1.Rows[index].Selected = true;
+            reviewer.OnReviewStateChanged += (_,_) => dataGridView1_SelectionChanged(null, null);
+            reviewer.OnSelectedClipIndexChanged += (_,newIndex) => dataGridView1.Rows[newIndex].Selected = true;
         }
 
         private void RefreshUI(object sender, EventArgs e)

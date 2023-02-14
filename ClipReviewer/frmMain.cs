@@ -36,7 +36,13 @@ namespace ClipReviewer
             this.Text += " DEBUG";
 #endif
             RefreshUI(null, null);
-            MainReviewer.OnReviewStateChanged += (state) => RefreshUI(null, null);
+            MainReviewer.OnReviewStateChanged += (_, _) => RefreshUI(null, null);
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MainReviewer != null)
+                MainReviewer.Dispose();
         }
 
         private void RefreshUI(object sender, EventArgs e)
