@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -46,6 +47,13 @@ namespace ClipReviewer.Utils
                 return false;
             }
             return true;
+        }
+
+        [DllImport("User32.dll")]
+        private static extern Int32 SetForegroundWindow(nint hWnd);
+        public static void BringToForeground(this Process p)
+        {
+            SetForegroundWindow(p.MainWindowHandle);
         }
     }
 }

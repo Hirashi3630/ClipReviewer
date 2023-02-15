@@ -55,6 +55,15 @@ namespace ClipReviewer.MediaControllers
             }
         }
 
+        public override string WhatIsPlaying
+        {
+            get
+            {
+                SendCommand(VlcCommand.Info);
+                return WaitForResult().Trim();
+            }
+        }
+
         public override int Position
         {
             get
@@ -84,19 +93,28 @@ namespace ClipReviewer.MediaControllers
             SendCommand(VlcCommand.Pause);
         }
 
-        public override void Add(string filename)
+        public override bool Add(string filename)
         {
+            if (string.IsNullOrEmpty(filename) || !File.Exists(filename)) return false;
             SendCommand(VlcCommand.Add, filename);
+            return true;
         }
 
-        public override void GoToFullscreen()
+        public override void Fullscreen(bool value)
         {
-            SendCommand(VlcCommand.F, "on");
+            SendCommand(VlcCommand.F, value ? "on" : "off");
         }
 
-        public override void Seek(int time)
+        public override bool Seek(int time)
         {
+            if (time < 0) return false;
             SendCommand(VlcCommand.Seek, time.ToString());
+            return true;
+        }
+
+        public override void Loop(bool value)
+        {
+            SendCommand(VlcCommand.Loop, value ? "on" : "off");
         }
         #endregion
 

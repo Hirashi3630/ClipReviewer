@@ -106,5 +106,17 @@ namespace ClipReviewer.Properties {
                 this["ThumbGenUseCached"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ClipsReviewFullscreen {
+            get {
+                return ((bool)(this["ClipsReviewFullscreen"]));
+            }
+            set {
+                this["ClipsReviewFullscreen"] = value;
+            }
+        }
     }
 }

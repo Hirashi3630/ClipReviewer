@@ -26,9 +26,9 @@ namespace ClipReviewer
             gBoxAutoSeek.Controls.Remove(cBoxAutoSeekEnabled);
             pAutoSeek.Controls.Add(cBoxAutoSeekEnabled);
             cBoxAutoSeekEnabled.BringToFront();
-            gBoxThumbnailGenerator.Controls.Remove(cBoxThumbnailGeneratorEnabled);
-            pThumbnailGenerator.Controls.Add(cBoxThumbnailGeneratorEnabled);
-            cBoxThumbnailGeneratorEnabled.BringToFront();
+            gBoxThumbnailGenerator.Controls.Remove(cBoxThumbGenEnabled);
+            pThumbGen.Controls.Add(cBoxThumbGenEnabled);
+            cBoxThumbGenEnabled.BringToFront();
 
             LoadSettings();
             RefreshUI(null, null);
@@ -37,7 +37,7 @@ namespace ClipReviewer
         private void RefreshUI(object sender, EventArgs e)
         {
             gBoxAutoSeek.Enabled = cBoxAutoSeekEnabled.Checked;
-            gBoxThumbnailGenerator.Enabled = cBoxThumbnailGeneratorEnabled.Checked;
+            gBoxThumbnailGenerator.Enabled = cBoxThumbGenEnabled.Checked;
         }
 
         private void LoadSettings()
@@ -45,7 +45,8 @@ namespace ClipReviewer
             cBoxTopMostWhileReviewing.Checked = Settings.Default.TopMostWhileReviewing;
             cBoxAutoSeekEnabled.Checked = Settings.Default.AutoSeekEnabled;
             txtBoxAutoSeekTime.Text = Settings.Default.AutoSeekTime;
-            cBoxThumbnailGeneratorEnabled.Checked = Settings.Default.ThumbGenEnabled;
+            cBoxClipsReviewFullscreen.Checked = Settings.Default.ClipsReviewFullscreen;
+            cBoxThumbGenEnabled.Checked = Settings.Default.ThumbGenEnabled;
             txtBoxThumbGenTime.Text = Settings.Default.ThumbGenTime;
             cBoxThumbGenIgnoreWarning.Checked = Settings.Default.ThumbGenIgnoreWarning;
             cBoxThumbGenUseCached.Checked = Settings.Default.ThumbGenUseCached;
@@ -62,7 +63,8 @@ namespace ClipReviewer
             Settings.Default.TopMostWhileReviewing = cBoxTopMostWhileReviewing.Checked;
             Settings.Default.AutoSeekEnabled = cBoxAutoSeekEnabled.Checked;
             Settings.Default.AutoSeekTime = txtBoxAutoSeekTime.Text;
-            Settings.Default.ThumbGenEnabled = cBoxThumbnailGeneratorEnabled.Checked;
+            Settings.Default.ClipsReviewFullscreen = cBoxClipsReviewFullscreen.Checked;
+            Settings.Default.ThumbGenEnabled = cBoxThumbGenEnabled.Checked;
             Settings.Default.ThumbGenTime = txtBoxThumbGenTime.Text;
             Settings.Default.ThumbGenIgnoreWarning = cBoxThumbGenIgnoreWarning.Checked;
             Settings.Default.ThumbGenUseCached = cBoxThumbGenUseCached.Checked;
