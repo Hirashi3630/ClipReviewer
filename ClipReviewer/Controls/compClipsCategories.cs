@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Data;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ClipReviewer
 {
     public partial class compClipsCategories : UserControl
     {
         public List<string> Categories => listBox.Items.Cast<string>().ToList();
+        public Action<string> CategorySelected = delegate { };
 
         public compClipsCategories()
         {
             InitializeComponent();
             RefreshUI();
         }
-        
-        public void Unselect() 
+
+        public void Unselect()
         {
             // reset selection
             listBox.SelectedIndex = -1;
@@ -49,6 +42,14 @@ namespace ClipReviewer
             txtBox.Text = listBox.SelectedItem as string;
             listBox.Items.RemoveAt(listBox.SelectedIndex);
             RefreshUI();
+        }
+
+        private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var item = listBox.SelectedItem as string;
+            Console.WriteLine(item);
+            if (!string.IsNullOrEmpty(item))
+                CategorySelected.Invoke(item);
         }
 
         private bool IsTxtBoxValid()

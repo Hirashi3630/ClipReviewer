@@ -37,6 +37,7 @@ namespace ClipReviewer
 #endif
             RefreshUI(null, null);
             MainReviewer.OnReviewStateChanged += (_, _) => RefreshUI(null, null);
+            compClipsCategories1.CategorySelected += CategorySelected;
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -117,6 +118,17 @@ namespace ClipReviewer
         private void btnCommitReview_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void CategorySelected(string category)
+        {
+            if (MainReviewer.State == ReviewerState.Reviewing)
+            {
+                var index = MainReviewer.SelectedClipIndex;
+                if (index >= 0 && index < MainReviewer.Clips.Count)
+                    MainReviewer.Clips[index].SetCategory(category);
+                Console.WriteLine(MainReviewer.SelectNext());
+            }
         }
 
         #region Menu

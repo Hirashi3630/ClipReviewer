@@ -24,9 +24,7 @@ namespace ClipReviewer.MediaControllers
             if (vlcPath == null || !File.Exists(vlcPath))
                 throw new ApplicationException("Can not find the VLC executable!");
 
-            var info = new ProcessStartInfo(vlcPath, "-I rc --rc-host=localhost:9876");
-            controllerProcess = Process.Start(info);
-            controllerTcpClient = new TcpClient("localhost", 9876);
+            controllerProcessExePath = vlcPath;
         }
 
         #region Overrides
@@ -45,6 +43,30 @@ namespace ClipReviewer.MediaControllers
             return vlcProcess;
         }
 
+        public override bool StartProcess()
+        {
+            if (string.IsNullOrEmpty(controllerProcessExePath))
+                throw new ApplicationException("Can not find the VLC executable!");
+
+            try
+            {
+                var info = new ProcessStartInfo(controllerProcessExePath, "-I rc --rc-host=localhost:9876");
+                controllerProcess = Process.Start(info);
+                controllerTcpClient = new TcpClient("localhost", 9876);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
+            }
+        }
+
+        public override bool StopProcess()
+        {
+            return base.StopProcess();
+        }
+
         public override bool IsPlaying
         {
             get
@@ -55,12 +77,16 @@ namespace ClipReviewer.MediaControllers
             }
         }
 
-        public override string WhatIsPlaying
+        private string LastAdded; 
+        public override string CurrentlyPlaying
         {
             get
             {
-                SendCommand(VlcCommand.Info);
-                return WaitForResult().Trim();
+                // TODO: get from info or playlist
+                //SendCommand(VlcCommand.Playlist);
+                //SendCommand(VlcCommand.Info);
+                //return WaitForResult().Trim();
+                return LastAdded;
             }
         }
 
@@ -83,21 +109,24 @@ namespace ClipReviewer.MediaControllers
             SendCommand(VlcCommand.Play);
         }
 
+        public override bool Play(string filename)
+        {
+            if (string.IsNullOrEmpty(filename) || !File.Exists(filename)) return false;
+            LastAdded = filename;
+            SendCommand(VlcCommand.Clear);
+            SendCommand(VlcCommand.Add, filename);
+            return true;
+        }
+
         public override void Stop()
         {
+            LastAdded = string.Empty;
             SendCommand(VlcCommand.Stop);
         }
 
         public override void Pause()
         {
             SendCommand(VlcCommand.Pause);
-        }
-
-        public override bool Add(string filename)
-        {
-            if (string.IsNullOrEmpty(filename) || !File.Exists(filename)) return false;
-            SendCommand(VlcCommand.Add, filename);
-            return true;
         }
 
         public override void Fullscreen(bool value)

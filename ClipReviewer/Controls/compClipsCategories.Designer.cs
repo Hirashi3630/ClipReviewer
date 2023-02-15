@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.gBox = new System.Windows.Forms.GroupBox();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.txtBox = new System.Windows.Forms.TextBox();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.listBox = new System.Windows.Forms.ListBox();
             this.pButtons = new System.Windows.Forms.Panel();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.txtBox = new System.Windows.Forms.TextBox();
+            this.listBox = new System.Windows.Forms.ListBox();
             this.gBox.SuspendLayout();
             this.pButtons.SuspendLayout();
             this.SuspendLayout();
@@ -53,26 +53,17 @@
             this.gBox.TabStop = false;
             this.gBox.Text = "Categories";
             // 
-            // btnClear
+            // pButtons
             // 
-            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(2, 61);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 6;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // txtBox
-            // 
-            this.txtBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBox.Location = new System.Drawing.Point(6, 22);
-            this.txtBox.Name = "txtBox";
-            this.txtBox.Size = new System.Drawing.Size(501, 23);
-            this.txtBox.TabIndex = 5;
-            this.txtBox.TextChanged += new System.EventHandler(this.RefreshUI);
+            this.pButtons.Controls.Add(this.btnAdd);
+            this.pButtons.Controls.Add(this.btnClear);
+            this.pButtons.Controls.Add(this.btnDelete);
+            this.pButtons.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pButtons.Location = new System.Drawing.Point(508, 19);
+            this.pButtons.Margin = new System.Windows.Forms.Padding(0);
+            this.pButtons.Name = "pButtons";
+            this.pButtons.Size = new System.Drawing.Size(83, 519);
+            this.pButtons.TabIndex = 7;
             // 
             // btnAdd
             // 
@@ -85,6 +76,17 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.Location = new System.Drawing.Point(2, 61);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 6;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -96,6 +98,16 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // txtBox
+            // 
+            this.txtBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBox.Location = new System.Drawing.Point(6, 22);
+            this.txtBox.Name = "txtBox";
+            this.txtBox.Size = new System.Drawing.Size(501, 23);
+            this.txtBox.TabIndex = 5;
+            this.txtBox.TextChanged += new System.EventHandler(this.RefreshUI);
+            // 
             // listBox
             // 
             this.listBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -104,30 +116,21 @@
             this.listBox.FormattingEnabled = true;
             this.listBox.ItemHeight = 15;
             this.listBox.Items.AddRange(new object[] {
+            "_Duplicates",
             "Death",
-            "Funny",
+            "Death/Deserved",
+            "Death/Trade",
+            "Death/Unlucky",
             "Kill",
-            "Kill/Snipe",
-            "Kill/Wicked",
-            "Trash"});
+            "Kill/Funny",
+            "Kill/Skill"});
             this.listBox.Location = new System.Drawing.Point(6, 51);
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(501, 484);
             this.listBox.Sorted = true;
             this.listBox.TabIndex = 2;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.RefreshUI);
-            // 
-            // pButtons
-            // 
-            this.pButtons.Controls.Add(this.btnAdd);
-            this.pButtons.Controls.Add(this.btnClear);
-            this.pButtons.Controls.Add(this.btnDelete);
-            this.pButtons.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pButtons.Location = new System.Drawing.Point(508, 19);
-            this.pButtons.Margin = new System.Windows.Forms.Padding(0);
-            this.pButtons.Name = "pButtons";
-            this.pButtons.Size = new System.Drawing.Size(83, 519);
-            this.pButtons.TabIndex = 7;
+            this.listBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
             // 
             // compClipsCategories
             // 
