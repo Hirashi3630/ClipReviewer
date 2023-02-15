@@ -20,7 +20,6 @@ namespace ClipReviewer.Controls
         {
             InitializeComponent();
             RefreshUI(null, null);
-            reviewer.OnReviewStateChanged += (_,_) => dataGridView1_SelectionChanged(null, null);
             reviewer.OnSelectedClipIndexChanged += (_, newIndex) => dataGridView1.Rows[newIndex].Selected = true;
         }
 
@@ -99,8 +98,11 @@ namespace ClipReviewer.Controls
             return reviewer.Clips;
         }
 
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Middle)
+                dataGridView1.AutoResizeColumns();
+
             Clip? c = (Clip)dataGridView1.CurrentRow.DataBoundItem;
             if (c != null && dataGridView1.Rows.Count > 0)
             {
@@ -150,10 +152,10 @@ namespace ClipReviewer.Controls
             SortDataGridViewByProperty(dataGridView1.Columns[e.ColumnIndex].DataPropertyName, ref dataSortAscending);
         }
 
-        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle)
-                dataGridView1.AutoResizeColumns();
+            e.Handled = true;
+            e.SuppressKeyPress = true;
         }
         #endregion
 
@@ -161,5 +163,7 @@ namespace ClipReviewer.Controls
         {
 
         }
+
+        
     }
 }
