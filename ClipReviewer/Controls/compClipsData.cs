@@ -21,7 +21,7 @@ namespace ClipReviewer.Controls
             InitializeComponent();
             RefreshUI(null, null);
             reviewer.OnReviewStateChanged += (_,_) => dataGridView1_SelectionChanged(null, null);
-            reviewer.OnSelectedClipIndexChanged += (_,newIndex) => dataGridView1.Rows[newIndex].Selected = true;
+            reviewer.OnSelectedClipIndexChanged += (_, newIndex) => dataGridView1.Rows[newIndex].Selected = true;
         }
 
         private void RefreshUI(object sender, EventArgs e)
@@ -68,7 +68,7 @@ namespace ClipReviewer.Controls
 
             if (slowMethod)
             {
-                uint i = 0;
+                int i = 0;
                 foreach (var f in fileEntries)
                 {
                     resultClips.Add(await Clip.New(f.FullName, id: i++));
@@ -82,7 +82,7 @@ namespace ClipReviewer.Controls
                     return Clip.New(f.FullName);
                 }, maxBatchSize: 0, allowOutOfOrderProcessing: true);
 
-                uint i = 0;
+                int i = 0;
                 foreach (var c in clips)
                 {
                     c.ID = i++;
@@ -96,13 +96,18 @@ namespace ClipReviewer.Controls
             dataGridView1.DataSource = reviewer.Clips;
             dataGridView1.AutoResizeColumns();
             this.Enabled = true;
-            return reviewer.Clips   ;
+            return reviewer.Clips;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (reviewer.SelectedClipIndex >= 0 && reviewer.SelectedClipIndex < dataGridView1.RowCount && reviewer.State == ReviewerState.Reviewing)
-                dataGridView1.Rows[reviewer.SelectedClipIndex].Selected = true;
+            Clip? c = (Clip)dataGridView1.CurrentRow.DataBoundItem;
+            if (c != null && dataGridView1.Rows.Count > 0)
+            {
+                var id = c.ID;
+                if (id >= 0)
+                    reviewer.Select(id);
+            }
         }
 
         private async void btnLoad_Click(object sender, EventArgs e)

@@ -16,7 +16,7 @@ namespace ClipReviewer
     {
         public static string THUMBNAIL_PATH = Path.Combine(Path.GetTempPath(), "ClipReviewer_Thumbnails");
 
-        public uint ID { get; set; }
+        public int ID { get; set; }
         public string FileName => Path.GetFileName(FullFilePath);
         public DateTime CreatedDate => File.GetCreationTime(FullFilePath);
         public TimeSpan VideoDuration { get; }
@@ -26,7 +26,7 @@ namespace ClipReviewer
         public string ThumbnailPath { get; private set; }
 
         public static async Task<Clip> New(string fullFilePath, 
-            uint id = 0, string category = "", string description = "")
+            int id = -1, string category = "", string description = "")
         {
             // --- hash ---
             // TODO: faster hash or something similar
@@ -76,7 +76,7 @@ namespace ClipReviewer
             return new Clip(id, fullFilePath, videoDuration, category, description, thumbnailPath);
         }
         
-        private Clip(uint id, string fullFilePath, TimeSpan videoDuration, string category = "", string description = "", string thumbnailPath = "")
+        private Clip(int id, string fullFilePath, TimeSpan videoDuration, string category = "", string description = "", string thumbnailPath = "")
         {
             ID = id;
             FullFilePath = fullFilePath;
