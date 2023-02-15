@@ -120,7 +120,7 @@ namespace ClipReviewer.Controls
                 slow = false;
             else return;
 
-            await LoadClips(txtBoxClipsFolderLocation.Text, slow);
+            frmMain.MainReviewer.Clips = await LoadClips(txtBoxClipsFolderLocation.Text, slow);
             RefreshUI(null, null);
         }
 

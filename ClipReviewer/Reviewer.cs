@@ -53,14 +53,14 @@ namespace ClipReviewer
         public Action<int, int> OnSelectedClipIndexChanged = delegate { };
         #endregion
 
-        private MediaController controller;
+        private MediaController mediaController;
 
         public Reviewer(List<Clip> clips, MediaController controller, ReviewerState state = ReviewerState.Stopped, int selectedClipIndex = -1)
         {
             this.State = state;
             this.Clips = clips;
             this.SelectedClipIndex = selectedClipIndex;
-            this.controller = controller;
+            this.mediaController = controller;
             OnReviewStateChanged += HandleStateChanged;
             OnClipsChanged += HandleClipsChanged;
             OnSelectedClipIndexChanged += HandleSelectedIndexChanged;
@@ -68,14 +68,14 @@ namespace ClipReviewer
 
         public void Dispose()
         {
-            if (controller != null) controller.Dispose();
+            if (mediaController != null) mediaController.Dispose();
         }
 
         public bool SelectNext() => Select(SelectedClipIndex + 1);
         public bool Select(int index)
         {
             if (Clips == null) throw new NullReferenceException(nameof(Clips));
-            if (State != ReviewerState.Reviewing) return false;
+            //if (State != ReviewerState.Reviewing) return false;
             var clipsCount = Clips.Count;
             if (clipsCount <= 0 || index < 0 || index >= clipsCount) return false;
 
@@ -96,8 +96,6 @@ namespace ClipReviewer
         {
 
         }
-
-        
     }
 
     public enum ReviewerState

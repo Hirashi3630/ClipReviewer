@@ -97,8 +97,8 @@ namespace ClipReviewer
             if (MainReviewer.State == ReviewerState.Stopped)
             {
                 // Its stopped -> run it
-                MainReviewer.State = ReviewerState.Reviewing;
-                MainReviewer.Select(0);
+                if (MainReviewer.Select(0))
+                    MainReviewer.State = ReviewerState.Reviewing;
             }
             else // Its running/paused -> stop it (reset it)
                 MainReviewer.State = ReviewerState.Stopped;
