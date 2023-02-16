@@ -39,7 +39,6 @@
             this.checkUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compClipsData1 = new ClipReviewer.Controls.compClipsData();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCommitReview = new System.Windows.Forms.Button();
@@ -135,22 +134,12 @@
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // compClipsData1
-            // 
-            this.compClipsData1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compClipsData1.Location = new System.Drawing.Point(303, 10);
-            this.compClipsData1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
-            this.compClipsData1.Name = "compClipsData1";
-            this.compClipsData1.Size = new System.Drawing.Size(454, 333);
-            this.compClipsData1.TabIndex = 0;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.compClipsCategories1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.compClipsData1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);

@@ -154,4 +154,22 @@
   <data name="ClipReviewer_Icon_v2_512" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\v2\ClipReviewer_Icon_v2@512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ClipReviewer_Icon_v3_016" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v3\ClipReviewer_Icon_v3@016.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v3_032" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v3\ClipReviewer_Icon_v3@032.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v3_064" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v3\ClipReviewer_Icon_v3@064.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v3_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v3\ClipReviewer_Icon_v3@128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v3_256" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v3\ClipReviewer_Icon_v3@256.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClipReviewer_Icon_v3_512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\v3\ClipReviewer_Icon_v3@512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

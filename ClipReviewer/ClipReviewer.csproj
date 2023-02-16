@@ -13,7 +13,7 @@
     <Copyright></Copyright>
     <Title>Clip Reviewer</Title>
     <Authors>Hirashi3630</Authors>
-    <ApplicationIcon>Resources\Icons\v2\ClipReviewer_Icon_v2.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icons\v3\ClipReviewer_Icon_v3.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +29,13 @@
     <None Include="Resources\Icons\v1\ClipReviewer_Icon_v1%40128.png" />
     <None Include="Resources\Icons\v1\ClipReviewer_Icon_v1%40256.png" />
     <None Include="Resources\Icons\v1\ClipReviewer_Icon_v1%40512.png" />
-    <Content Include="Resources\Icons\v2\ClipReviewer_Icon_v2.ico" />
+    <None Include="Resources\Icons\v3\ClipReviewer_Icon_v3%40016.png" />
+    <None Include="Resources\Icons\v3\ClipReviewer_Icon_v3%40032.png" />
+    <None Include="Resources\Icons\v3\ClipReviewer_Icon_v3%40064.png" />
+    <None Include="Resources\Icons\v3\ClipReviewer_Icon_v3%40128.png" />
+    <None Include="Resources\Icons\v3\ClipReviewer_Icon_v3%40256.png" />
+    <None Include="Resources\Icons\v3\ClipReviewer_Icon_v3%40512.png" />
+    <Content Include="Resources\Icons\v3\ClipReviewer_Icon_v3.ico" />
     <None Include="Resources\Icons\v2\ClipReviewer_Icon_v2%40512.png" />
     <None Include="Resources\Icons\v2\ClipReviewer_Icon_v2%40256.png" />
     <None Include="Resources\Icons\v2\ClipReviewer_Icon_v2%40128.png" />
